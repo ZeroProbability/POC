@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+
+sourceCompatibility=1.6
+targetCompatibility=1.6
+
+description = 'Spring hibernate example'
+
+repositories {
+	mavenCentral()
+    maven {
+       url "http://repo.springsource.org/release"
+    }
+    maven {
+       url "http://download.eclipse.org/jgit/maven"
+    }
+}
+
+dependencies {
+	[ 'core', 'context', 'beans', 'web', 'webmvc', 'tx', 'orm' ].collect { "org.springframework:spring-${it}:3.1.1.RELEASE" }.each() {
+	    compile it
+	}
+
+	compile "commons-dbcp:commons-dbcp:1.2"
+
+	[ 'entitymanager', 'ehcache' ].collect { "org.hibernate:hibernate-${it}:4.1.7.Final" }.each() {
+	    compile it
+	}
+
+	compile "jstl:jstl:1.2"
+	compile "org.hsqldb:hsqldb:2.2.4"
+}
