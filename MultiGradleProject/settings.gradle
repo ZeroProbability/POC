@@ -1,0 +1,9 @@
+new File('.').eachFile { level1_dir ->
+    if(level1_dir.isDirectory() && new File(level1_dir, 'build.gradle').exists())  {
+		include level1_dir.getName()
+		level1_dir.eachFile { level2_dir -> 
+		    if(level2_dir.isDirectory() && new File(level2_dir, 'build.gradle').exists())  
+		         include level1_dir.getName()+":"+level2_dir.getName()
+		}
+	}
+}

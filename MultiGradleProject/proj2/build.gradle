@@ -1,0 +1,3 @@
+allprojects {
+    task hellox << {task -> println "I'm $task.project.name" }
+}
