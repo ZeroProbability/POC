@@ -14,9 +14,6 @@ repositories {
     maven {
        url "http://repo.springsource.org/release"
     }
-    maven {
-       url "http://download.eclipse.org/jgit/maven"
-    }
 }
 
 dependencies {

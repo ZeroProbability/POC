@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  runtime 'org.hsqldb:hsqldb:2.2.4'
+}
+
+
+task createDatabaseScript {
+  group = 'database'
+  doLast { 
+    def fileName = 'starth2'
+    if(System.properties['os.name'].startsWith('Windows')) { 
+      fileName += '.bat'
+    }
+    def file = new File(projectDir, fileName)
+    file.withPrintWriter {  pw -> 
+      pw.print("java -cp ${sourceSets.main.runtimeClasspath.asPath} org.hsqldb.Server -database.0 file:db/mydb -dbname.0 xdb") 
+    }
+    file.setExecutable(true)
+  }
+}

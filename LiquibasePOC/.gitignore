@@ -1,0 +1,7 @@
+.gradle/
+build/
+db/
+changelog.groovy
+.gradletasknamecache
+starth2
+starth2.bat
