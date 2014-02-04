@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+project.ext.set('aspectjVersion','1.6.2');apply plugin: 'aspectj'
+
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+sourceCompatibility=1.6
+targetCompatibility=1.6
+
+description = 'Test project to see how AspectJ will work with Tomcat'
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = false
+    }
+    project.natures += 'org.eclipse.ajdt.ui.ajnature'
+    project.buildCommands += [ name:'org.eclipse.ajdt.core.ajbuilder' ]
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    provided "org.apache.tomcat:tomcat-servlet-api:7.0.42"
+    compile "org.aspectj:aspectjlib:${project.aspectjVersion}"
+    testCompile "junit:junit:4.7"
+    testCompile "org.mockito:mockito-all:1.8.2"
+}
+
+
+buildscript {
+    repositories {
+        maven {
+            url "https://maven.eveoh.nl/content/repositories/releases"
+        }
+    }
+
+    dependencies {
+        classpath "nl.eveoh:gradle-aspectj:1.2"
+    }
+}
