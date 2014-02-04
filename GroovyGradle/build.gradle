@@ -12,7 +12,7 @@ eclipse {
     
 }
 
-description = 'This project contains all the models (Model as in Model-View-Controller pattern) and their utility classes'
+description = 'Test project to see how groovy and gradle work together'
 
 repositories {
     mavenCentral()
