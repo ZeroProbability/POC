@@ -6,6 +6,8 @@ project.ext.set('aspectjVersion','1.6.2');apply plugin: 'aspectj'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 
+apply plugin: 'tomcat'
+
 sourceCompatibility=1.6
 targetCompatibility=1.6
 
@@ -35,10 +37,19 @@ dependencies {
     compile "org.aspectj:aspectjlib:${project.aspectjVersion}"
     testCompile "junit:junit:4.7"
     testCompile "org.mockito:mockito-all:1.8.2"
+    /* for tomcat */
+
+    def tomcatVersion = '7.0.42'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
 }
 
 
 buildscript {
+    /* for aspectj */    
     repositories {
         maven {
             url "https://maven.eveoh.nl/content/repositories/releases"
@@ -47,5 +58,15 @@ buildscript {
 
     dependencies {
         classpath "nl.eveoh:gradle-aspectj:1.2"
+    }
+
+
+    /* for tomcat */    
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.0'
     }
 }
