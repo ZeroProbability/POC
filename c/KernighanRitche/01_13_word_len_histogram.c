@@ -22,9 +22,12 @@ int main() {
        if(current_word_size>0) {
            if(current_word_size < WORD_MAX_SIZE){ // ignore any word size > 100
                size_lookup[current_word_size]++; 
-               if(size_lookup[current_word_size]>max_count) max_count=size_lookup[current_word_size];
+               if(size_lookup[current_word_size]>max_count) 
+                 max_count=size_lookup[current_word_size];
            } else  {
-               printf("Warning: word size %d ignored because the program can only handle %d word size.\n", current_word_size, WORD_MAX_SIZE); 
+               printf("Warning: word size %d ignored because the program can \
+                   only handle %d word size.\n", current_word_size, 
+                   WORD_MAX_SIZE); 
            }
            current_word_size=0;
        } 

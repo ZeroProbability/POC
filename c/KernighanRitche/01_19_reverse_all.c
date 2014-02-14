@@ -4,7 +4,9 @@
 int get_line(char s[], int lim);
 void reverse(char s[], char out[]);
 
-/* print the longest input line */
+//Exercise 1-19. Write a function reverse(s) that reverses the character 
+//string s. Use it to write a program that reverses its input a line at a time.
+
 int main()
 {
   int len;                 // Current line length

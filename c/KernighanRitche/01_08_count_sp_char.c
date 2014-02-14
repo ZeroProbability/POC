@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// Exercise 1-8. Write a program to count blanks, tabs, and newlines.
+
 int main() {
   int c=0;
   int newline_count=0, tab_count=0, blank_count=0;
