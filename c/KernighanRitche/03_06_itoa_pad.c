@@ -27,19 +27,19 @@
 //        reverse(s);
 //      }
 
-void itoa(int n, char s[]);
+void itoa(int n, char s[],int l);
 void reverse(char s[]);
 
 int main() {
   char s[MAXLENGTH];
 
-  itoa(INT_MIN,s);
+  itoa(INT_MIN,s,40);
   printf("%s\n",s);
   return 0; 
 } 
 
 /* itoa: convert n to characters in s */
-void itoa(int n, char s[])
+void itoa(int n, char s[], int l)
 {
   int i=0, sign;
   if(n==INT_MIN) {
@@ -56,6 +56,9 @@ void itoa(int n, char s[])
   /* delete it */
   if (sign < 0)
     s[i++] = '-';
+  int k;int padl=l-i;
+  for(k=0;k<padl;k++) 
+    s[i++]=' ';
   s[i] = '\0';
   reverse(s);
 }
