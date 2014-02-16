@@ -1,6 +1,5 @@
-//  Exercise 4-4. Add the commands to print the top elements of the stack 
-//  without popping, to duplicate it, and to swap the top two elements. Add a 
-//  command to clear the stack.
+//  Exercise 4-8. Suppose that there will never be more than one character of 
+//  pushback. Modify getch and ungetch accordingly.
 //
 //  #include <stdio.h>
 //  #include <stdlib.h> /* for atof() */
@@ -60,11 +59,6 @@
 int getop(char []);
 void push(double);
 double pop(void);
-double peek(void);
-double peek_next(void);
-void dup(void);
-void swap(void);
-void clear(void);
 
 /* reverse Polish calculator */
 int main()
@@ -93,40 +87,16 @@ int main()
              push(pop() / op2);
           else
              printf("error: zero divisor\n");
-          break;
-        case '%':
-          op2 = pop();
-          if (op2 != 0.0)
-            push((int)pop() % (int)op2);
-          else
-            printf("error: zero divisor\n");
-          break;
-        case '#':
-          clear();
-          printf("elements cleared\n");
-          break;
-        case '~':
-          swap();
-          printf("elements swaped\n");
-          break;
-        case ':':
-          op2=peek();
-          printf("top element = %lf\n", op2);
-          break;
-        case '"':
-          op2=peek();
-          push(op2);
-          printf("top element = %lf\n", op2);
-          printf("element duplicated= %lf\n", op2);
-          break;
-        case ';':
-          op2=peek();
-          printf("top element = %lf\n", op2);
-          op2=peek_next();
-          printf("next element = %lf\n", op2);
-          break;
+        break;
+      case '%':
+        op2 = pop();
+        if (op2 != 0.0)
+          push((int)pop() % (int)op2);
+        else
+          printf("error: zero divisor\n");
+        break;
       case '\n':
-        printf("\t%.8g\n", peek());
+        printf("\t%.8g\n", pop());
         break;
       default:
         printf("error: unknown command %s\n", s);

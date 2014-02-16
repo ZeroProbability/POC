@@ -1,6 +1,6 @@
-//  Exercise 4-4. Add the commands to print the top elements of the stack 
-//  without popping, to duplicate it, and to swap the top two elements. Add a 
-//  command to clear the stack.
+//  Exercise 4-7. Write a routine ungets(s) that will push back an entire 
+//  string onto the input. Should ungets know about buf and bufp , or should 
+//  it just use ungetch ?
 //
 //  #include <stdio.h>
 //  #include <stdlib.h> /* for atof() */
@@ -60,11 +60,7 @@
 int getop(char []);
 void push(double);
 double pop(void);
-double peek(void);
-double peek_next(void);
-void dup(void);
-void swap(void);
-void clear(void);
+void ungets(char c[]);
 
 /* reverse Polish calculator */
 int main()
@@ -72,6 +68,9 @@ int main()
     int type;
     double op2;
     char s[MAXOP];
+    char expression[]="20 30 +\n";
+    
+    ungets(expression);
     while ((type = getop(s)) != EOF) {
       switch (type) {
         case NUMBER:
@@ -93,40 +92,9 @@ int main()
              push(pop() / op2);
           else
              printf("error: zero divisor\n");
-          break;
-        case '%':
-          op2 = pop();
-          if (op2 != 0.0)
-            push((int)pop() % (int)op2);
-          else
-            printf("error: zero divisor\n");
-          break;
-        case '#':
-          clear();
-          printf("elements cleared\n");
-          break;
-        case '~':
-          swap();
-          printf("elements swaped\n");
-          break;
-        case ':':
-          op2=peek();
-          printf("top element = %lf\n", op2);
-          break;
-        case '"':
-          op2=peek();
-          push(op2);
-          printf("top element = %lf\n", op2);
-          printf("element duplicated= %lf\n", op2);
-          break;
-        case ';':
-          op2=peek();
-          printf("top element = %lf\n", op2);
-          op2=peek_next();
-          printf("next element = %lf\n", op2);
-          break;
+        break;
       case '\n':
-        printf("\t%.8g\n", peek());
+        printf("\t%.8g\n", pop());
         break;
       default:
         printf("error: unknown command %s\n", s);

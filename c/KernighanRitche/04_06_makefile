@@ -1,0 +1,3 @@
+all:
+	gcc -g -Wall -Wextra 04_06_*.c -o 04_06_calculator
+		
