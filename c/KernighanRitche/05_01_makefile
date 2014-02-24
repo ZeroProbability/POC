@@ -1,0 +1,3 @@
+all:
+	gcc -g -Wall -Wextra 05_01_*.c -o 05_01_getint
+		
