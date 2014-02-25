@@ -1,0 +1,3 @@
+all:
+	gcc -g -Wall -Wextra 06_02_*.c -o 06_02_findvars
+		
