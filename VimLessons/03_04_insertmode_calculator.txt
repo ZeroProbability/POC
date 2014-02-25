@@ -1,0 +1,5 @@
+In insert mode press <Ctrl-r>= to do calculations
+-------------------------------------------------
+
+try to insert the value of 4323 x 343 under this line
+.. here =

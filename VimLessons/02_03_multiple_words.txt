@@ -1,0 +1,13 @@
+Delete 2 words in the middle of the following sentence
+------------------------------------------------------
+
+this is a sentence with more than two words
+
+Solution: d2w
+
+Change 3 words in the middle of the following sentence
+------------------------------------------------------
+
+this is a sentence with more than two words
+
+Solution: c3w new words<esc>

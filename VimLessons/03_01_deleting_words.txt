@@ -1,0 +1,7 @@
+Use Ctrl-h, Ctrl-w and Ctrl-u to play with and delete characters 
+in the follwing line. (you got to be in insert mode)
+----------------------------------------------------------------
+
+There is a single line here for you to play with. Delete as many 
+as you want, but ensure you restore it back the way it was for 
+the next time.

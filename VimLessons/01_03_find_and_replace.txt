@@ -1,0 +1,10 @@
+Put your cursor under the word 'content', search and replace only first and
+last occurance to 'copy'
+---------------------------------------------------------------------------
+...We're waiting for content before the site can go live...
+...If you are content with this, let's go ahead with it...
+...We'll launch as soon as we have the content...
+
+Keys: * cwcopy<esc> n .
+
+

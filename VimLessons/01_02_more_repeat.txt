@@ -1,0 +1,16 @@
+Append a ';' at the end of each line in the following code
+----------------------------------------------------------
+var foo=1
+var bar='a'
+var foobar=foo + bar
+
+Keys: A;<esc> j . j . 
+
+Put a single space between each of the '+' operators in the following 
+line of code
+----------------------------------------------------------
+var foo = "method("+argument1+","+argument2+")";
+
+Keys: f+ s␣+␣<esc> ;. ;. ;. 
+
+

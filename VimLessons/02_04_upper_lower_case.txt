@@ -1,0 +1,12 @@
+Convert a word in the middle of the following sentence to upper case,
+then back to lower case, swap case. 
+
+Do the same for entire line, end of line etc
+--------------------------------------------------------------------
+
+Use this sentence to play the way you like
+
+Solution: gUaw guaw gUap guap
+
+Swap case solution: g~aw g~ap
+

@@ -1,0 +1,13 @@
+Position your cursor at the end of following line and delete the last word
+--------------------------------------------------------------------------
+The end is neih
+
+Solution: db x
+
+The end is neih
+
+Solution: b dw
+
+The end is neih
+
+Solution: daw

@@ -1,0 +1,31 @@
+Use 'x' to delete the first letter, and '.' to delete the rest of the world
+Lesson: '.' repeats the last edit action
+---------------------------------------------------------------------------
+Line one
+Line two
+Line three
+Line four
+
+Should transform to: 
+
+one
+Line two
+Line three
+Line four
+
+Use the 'dd' command to delete the first line and '.' to delete the rest. 
+---------------------------------------------------------------------------
+Line one
+Line two
+Line three
+Line four
+
+Should transform to nothing.
+
+
+Use the '>G' to increase the indent to the end of file. And '.' to repeat it n times. 
+---------------------------------------------------------------------------
+Line one
+Line two
+Line three
+Line four
