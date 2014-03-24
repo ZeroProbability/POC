@@ -1,7 +1,9 @@
 package com.klyserv.projecteuler;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Helper {
 	
@@ -226,4 +228,48 @@ public class Helper {
 			n *= 10;
 		return in%n;
 	}
+	
+	public static long toLong(List<Object> i) {
+		long r=0l;
+		for(Object o:i) {
+			r=r*10l+(int)o;
+		}
+		return r;
+	}
+
+	public static long pentagonal(long i){
+		return(i*(3l*i-1)/2l);
+	}
+	
+	public static long isPentagonal(long i){ // returns n if it is a pentagonal number
+		long determinant=1l+24l*i;
+		long sqrtDeterminant=(long)Math.sqrt(determinant);
+		
+		if(sqrtDeterminant*sqrtDeterminant!=determinant) return 0;
+		if((1+sqrtDeterminant)%6==0) return (1+sqrtDeterminant)/6;
+		return 0;
+	}
+	
+	public static long triangle(long i) {
+		return(i*(i+1)/2);
+	}
+	
+	public static long isTriangle(long i){ // returns n if it is a pentagonal number
+		long determinant=1l+8l*i;
+		long sqrtDeterminant=(long)Math.sqrt(determinant);
+		
+		if(sqrtDeterminant*sqrtDeterminant!=determinant) return 0;
+		if((1+sqrtDeterminant)%2==0) return (1+sqrtDeterminant)/2;
+		return 0;
+	}
+	
+	public static List<Integer> digitsIn(long i) {
+		List<Integer> l=new ArrayList<Integer>();
+		while(i>0) { 
+			l.add((int)(i%10));
+			i=i/10;
+		}
+		return l;
+	}
+	
 }

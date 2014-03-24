@@ -3,6 +3,7 @@ package com.klyserv.projecteuler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.TreeSet;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Permutation {
 
 	private static void permutationx(TreeSet<Object> fullList, List<Object> displayList, PermutationListener pl){
 		if(fullList.isEmpty()) {
-			pl.listen(displayList);
+			pl.listen(Collections.unmodifiableList(displayList));
 		}
 		for(Object p0:fullList) {
 			TreeSet<Object> fullList1=new TreeSet<Object>(fullList);

@@ -31,7 +31,7 @@ public class Factors {
 	}
 	
 	public static void main(String[] args) {
-		findFactors(100);
+		System.out.println(findFactors(100));
 	}
 
 }
