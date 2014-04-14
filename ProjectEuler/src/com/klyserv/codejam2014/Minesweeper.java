@@ -8,13 +8,15 @@ import java.util.Scanner;
 public class Minesweeper {
 	
 	private static final boolean OUTPUT_TO_CONSOLE=true;
+	private static final String INPUT_FILE_NAME="small.txt";
+	private static final String OUTPUT_FILE_NAME="output.txt";
 	
 	private static Scanner reader;
 	private static BufferedWriter writer;
 	
 	public static void main(String[] args) throws Exception {
 		Minesweeper ms=new Minesweeper();
-		ms.openFile("large1.txt");
+		ms.openFile(INPUT_FILE_NAME);
 		int probCount=ms.readproblemCount();
 
 		for(int probNumber=1;probNumber<=probCount;probNumber++) {
@@ -50,7 +52,7 @@ public class Minesweeper {
 		File inputFile=new File(fileName);
 		reader = new Scanner(inputFile);
 		
-		File outputFile=new File("output.txt");
+		File outputFile=new File(OUTPUT_FILE_NAME);
 		if (!outputFile.exists()) {
 			outputFile.createNewFile();
 		}
