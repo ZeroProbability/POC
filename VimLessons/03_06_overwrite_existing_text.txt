@@ -1,0 +1,11 @@
+Replace the text 'line. But' to 'line, But'
+------------------------------------------
+
+Typing in Insert mode extends the line, but in Replace mode
+the line doesn't change.
+
+keystrokes : f. R, b<Esc>
+
+For replacing just one character use r{char} or gr{char}
+
+Virtual replace mode: gR

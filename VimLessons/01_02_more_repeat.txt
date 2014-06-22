@@ -8,7 +8,7 @@ Keys: A;<esc> j . j .
 
 Put a single space between each of the '+' operators in the following 
 line of code
-----------------------------------------------------------
+----------------------------------------------------------------------
 var foo = "method("+argument1+","+argument2+")";
 
 Keys: f+ s␣+␣<esc> ;. ;. ;. 

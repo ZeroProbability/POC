@@ -1,0 +1,23 @@
+Create horizontal and vertical text lines 
+for following tabular data.
+------------------------------------------
+
+Chapter                    Page
+Normal mode                15
+Insert mode                31
+Visual mode                44
+
+At the end it should look like this.
+
+Chapter           |    Page
+---------------------------
+Normal mode       |    15
+Insert mode       |    31
+Visual mode       |    44
+
+Solution: Block select the column you want to delete 
+and use x key to delete the column.
+When moved enough hit r| to replace that column with pipe 
+character.
+Copy and paste the top row(yyp). Hit V to select that row(line) 
+and hit r- to replace that line with hyphen.

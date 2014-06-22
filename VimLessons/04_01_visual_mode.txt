@@ -1,0 +1,65 @@
+Use Visual commands to select and modify text below.
+Use the keys to copy the text 'ASDF DKJDFK CKDKJDF CKDJFDKJ CDKJ CDD' in
+the middle of the paragraph.
+----------------------------------------------------
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in magna
+aliquam, scelerisque nisl sed, consequat enim. Fusce tincidunt volutpat enim,
+sed ornare lacus malesuada non. Sed placerat volutpat diam, sit amet congue
+velit blandit quis. Nam ut porttitor nunc. Pellentesque posuere dui ac nisi
+eleifend, ut tincidunt mi commodo. Maecenas aliquet ultricies dignissim. Sed
+ultricies magna non sodales facilisis. Interdum et malesuada fames ac ante
+ipsum primis in faucibus. Morbi fringilla tempor ante, et ullamcorper velit
+consequat et. Mauris ASDF DKJDFK CKDKJDF CKDJFDKJ CDKJ CDD. Donec aliquam
+ligula eu turpis pharetra, sed elementum nisl faucibus. Integer porta, lacus
+nec dictum rhoncus, arcu lorem facilisis tellus, posuere gravida turpis magna
+vel neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+per inceptos himenaeos. Nunc mattis libero quis neque lobortis pellentesque.
+Nam adipiscing nisl vitae neque aliquet, sit amet gravida nibh egestas.
+
+
+Keys : v      - enable char visual mode
+       V      - enable line visual mode
+       Ctrl-V - enable blockwise visual mode
+       gv     - Reselect the last visual selection
+       o      - go to other end of highlighted text
+       
+Use visual commands to highlight the two lines after while statement and 
+move them to the right.
+-------------------------------------------------------------------------
+
+def fib(n):
+    a, b = 0, 1
+    while a < n:
+print a,
+a , b = b, a+b
+fib(42)
+
+After that the code should look like this.
+def fib(n):
+    a, b = 0, 1
+    while a < n:
+        print a,
+        a , b = b, a+b
+fib(42)
+
+Keys : Vj>.
+
+Use visual mode to hilight inside the tag and repeat that to the following two
+lines.
+-----------------------------------------------------------------------------
+<a href="#">one</a>
+<a href="#">two</a>
+<a href="#">three</a>
+
+After that the lines should look like this.
+
+<a href="#">ONE</a>
+<a href="#">TWO</a>
+<a href="#">THRee</a>
+
+Keys: vitU j. j.
+
+Note: Keys gUit will also work. It is 'gU' uppercase followed by direction 
+command 'it'.
+

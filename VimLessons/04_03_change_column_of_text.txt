@@ -1,0 +1,16 @@
+Change the '/images/' to '/components/' in the following piece
+of code
+--------------------------------------------------------------
+
+li.one       a{ background-image: url('/images/sprite.png'); }
+li.two       a{ background-image: url('/images/sprite.png'); }
+li.three     a{ background-image: url('/images/sprite.png'); }
+
+At the end of it, the code should look like this.
+
+li.one       a{ background-image: url('/components/sprite.png'); }
+li.two       a{ background-image: url('/components/sprite.png'); }
+li.three     a{ background-image: url('/components/sprite.png'); }
+
+Solution: Highlight the column containing text 'images' in visual mode.
+hit c. Type 'components' and hit <Esc> key to return to normal mode.

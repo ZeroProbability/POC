@@ -1,0 +1,17 @@
+In insert any unicode character by typeing <Ctrl-v>{nnn} 
+where nnn is digital. Example <Ctrl-v>{065} will insert 
+A.
+----------------------------------------------------------------
+
+In insert mode type <Ctrl-v>u{nnnn} it will print the 
+equivalant unicode character
+----------------------------------------------------------------
+
+In insert mode type <Ctrl-v>{char}{char} to print diagraph
+Example <Ctrl-k>?I
+----------------------------------------------------------------
+
+Use keystrokes ga to view numeric code for any character in your
+document.
+----------------------------------------------------------------
+
