@@ -3,3 +3,8 @@
 .classpath
 .settings
 .gradle
+.idea
+TicTacToe.iml
+TicTacToe.ipr
+TicTacToe.iws
+build

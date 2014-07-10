@@ -1,2 +1,16 @@
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+test {
+    useTestNG() {
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
