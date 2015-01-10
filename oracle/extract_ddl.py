@@ -8,7 +8,8 @@ import sys, getopt
 def generic_ddl(owner, object_type, object_name):
     # read the views
     cur = con.cursor()
-    cur.execute("SELECT DBMS_METADATA.GET_DDL(replace(object_type, ' ', '_'), object_name, owner) FROM ALL_OBJECTS WHERE (owner = '{0}' and object_type='{1}' and object_name='{2}')".format(owner, object_type, object_name))
+    print "%s %s %s"%(owner, object_type, object_name)
+    cur.execute("SELECT DBMS_METADATA.GET_DDL(replace(object_type, ' ', '_'), object_name, owner) FROM DBA_OBJECTS WHERE (owner = '{0}' and object_type='{1}' and object_name='{2}')".format(owner, object_type, object_name))
 
     row=cur.fetchone()
     obj_ddl_str=row[0].read()
@@ -20,7 +21,7 @@ def generic_ddl(owner, object_type, object_name):
 def ddl_extract_of_generic_type(owner, object_type):
     # read the views
     cur = con.cursor()
-    cur.execute("SELECT object_name FROM ALL_OBJECTS WHERE (owner = '{0}' and object_type='{1}')".format(owner, object_type))
+    cur.execute("SELECT object_name FROM DBA_OBJECTS WHERE (owner = '{0}' and object_type='{1}')".format(owner, object_type))
     
     file_path="{0}/{1}".format(owner, object_type)
 
@@ -55,7 +56,7 @@ def ddl_extract_of_table(owner):
             'PARTITIONING', FALSE);
     end;""")
 
-    cur.execute("SELECT object_name FROM ALL_OBJECTS WHERE (owner = '{0}' and object_type='{1}')".format(owner, object_type))
+    cur.execute("SELECT object_name FROM DBA_OBJECTS WHERE (owner = '{0}' and object_type='{1}')".format(owner, object_type))
 
     file_path="{0}/{1}".format(owner, object_type)
 
@@ -74,8 +75,8 @@ def ddl_extract_of_table(owner):
 
         comments_str=""
         for column_name, col_comment, in col_comments_cur:
-            comments_str+='  COMMENT ON COLUMN "{0}"."{1}"."{2}" IS \'{3}\';\n'.format(owner, table_name, column_name, col_comment)
-        if col_comments_cur.rowcount >0:
+            comments_str+='  COMMENT ON COLUMN "{0}"."{1}"."{2}" IS \'{3}\';\n'.format(owner, table_name, column_name, col_comment.replace("'", "''"))
+        if col_comments_cur.rowcount > 0:
             ddl_file.write("\n"+comments_str)
 
         index_cur=con.cursor()
@@ -144,11 +145,11 @@ def main(argv):
     global con
     con = cx_Oracle.connect(connect_string)
 
-    for owner in ('FEDM',):
+    for owner in ('FEDM','FEODS','FEAUDIT'):
         ddl_extract_of_table(owner)
-        #for otype in ('VIEW', 'PROCEDURE', 'PACKAGE', 'SEQUENCE', 'SYNONYM',
-         #       'TRIGGER', 'MATERIALIZED VIEW', 'LIBRARY', 'TYPE', 'FUNCTION'):
-         #   ddl_extract_of_generic_type(owner, otype)
+        for otype in ('VIEW', 'PROCEDURE', 'PACKAGE', 'SEQUENCE', 'SYNONYM',
+                'TRIGGER', 'MATERIALIZED VIEW', 'LIBRARY', 'TYPE', 'FUNCTION'):
+            ddl_extract_of_generic_type(owner, otype)
 
     con.close()
 
