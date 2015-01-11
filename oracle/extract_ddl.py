@@ -14,7 +14,7 @@ def generic_ddl(owner, object_type, object_name):
     row=cur.fetchone()
     obj_ddl_str=row[0].read()
     obj_ddl_str=obj_ddl_str.rstrip()
-    if(obj_ddl_str[-1] != ';'):
+    if(obj_ddl_str[-1] != ';' and obj_ddl_str[-1] != '/'):
         obj_ddl_str+=';'
     return obj_ddl_str
 
@@ -56,7 +56,15 @@ def ddl_extract_of_table(owner):
             'PARTITIONING', FALSE);
     end;""")
 
-    cur.execute("SELECT object_name FROM DBA_OBJECTS WHERE (owner = '{0}' and object_type='{1}')".format(owner, object_type))
+    cur.execute("""SELECT object_name FROM DBA_OBJECTS WHERE (owner = '{0}' and object_type='{1}')
+                      AND (owner, object_name) NOT IN (
+                           SELECT owner, mview_name
+                             FROM dba_mviews
+                           UNION ALL
+                           SELECT log_owner, log_table
+                             FROM all_mview_logs
+                      )
+                """.format(owner, object_type))
 
     file_path="{0}/{1}".format(owner, object_type)
 
