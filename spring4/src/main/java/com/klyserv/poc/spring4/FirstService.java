@@ -1,4 +1,4 @@
-package com.klyserv.poc.spring4.config;
+package com.klyserv.poc.spring4;
 
 /**
  * Created by anbu on 14/10/15.

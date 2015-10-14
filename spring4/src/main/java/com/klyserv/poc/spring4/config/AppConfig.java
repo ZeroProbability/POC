@@ -1,5 +1,6 @@
 package com.klyserv.poc.spring4.config;
 
+import com.klyserv.poc.spring4.FirstService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
