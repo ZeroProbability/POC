@@ -5,7 +5,7 @@ class GridTest extends Specification {
 
     def "test_main_grid"() {  
         given: 
-            def grid = new Grid(xlen: 80, ylen: 20)
+            def grid = new Grid(xlen: 100, ylen: 40)
 
         when:                                           
             grid.init()
