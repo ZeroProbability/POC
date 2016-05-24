@@ -2,31 +2,32 @@
 # encoding: utf-8
 
 from tkinter import *
+from itertools import product
 
+
+def neighbors(y, x):
+    return set(product([y-1, y, y+1], [x-1, x, x+1])) - set([(y,x)])
+    
 
 class Grid(object):
 
-    def __init__(self, lenx=0, leny=0):
-        self._lenx = lenx
-        self._leny = leny
-
+    def __init__(self):
         self._grid = []
 
     @classmethod
     def init_from(clazz, two_d_array):
-        leny = len(two_d_array)
-        if leny:
-            lenx = len(two_d_array[0])
-        else:
-            lenx = 0
-        
-        inst=clazz(lenx, leny)
-        inst._grid = two_d_array
+        ylen = len(two_d_array)
+        xlen = len(two_d_array[0])
 
-        return inst
+        grid = set()
+        for x in xrange(xlen):
+            for y in xrange(ylen):
+                if two_d_array[y][x]:
+                   grid.add((y,x))
 
-    def as_two_d_array(self):
-        return self._grid[:]
+        return grid
+
+
 
 
 #        master = Tk()
@@ -48,8 +49,10 @@ def test_grid_cast1():
                  [ 0, 1, 1, 0  ], 
                  [ 0, 0, 0, 0  ]] 
 
-    grid = Grid.init_from(test_grid).as_two_d_array()
+    grid = Grid.init_from(test_grid)
 
     print grid
+
+    print neighbors(3, 2)
 
     assert 1 == 2
