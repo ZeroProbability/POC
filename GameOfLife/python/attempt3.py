@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+import os
+
 class Grid(object):
 
     def __init__(self, xlen=0, ylen=0):
@@ -16,6 +18,8 @@ class Grid(object):
 
         if self._ylen:
             self._xlen = len(two_d_array[0])
+
+        return self
 
 
     def display_grid(self):
@@ -43,6 +47,11 @@ class Grid(object):
 
             live_neighbours -= self._grid[y][x]
 
+            if self._grid[y][x]:
+                return 1 if live_neighbours in (2, 3) else 0
+            else:
+                return 1 if live_neighbours == 3 else 0
+
         new_array = []
         for y in xrange(0, self._ylen):
             new_array_row = []
@@ -51,20 +60,38 @@ class Grid(object):
 
             new_array.append(new_array_row)
 
+        return Grid().init_grid_from(new_array)
 
+
+if __name__ == '__main__':
+
+    import numpy as np
+    rand_array = np.random.randint(0, 2, (20, 80))
+    rand_array = map(list, rand_array)
+    grid = Grid().init_grid_from(rand_array)
+
+
+    while True:
+        os.system('clear')
+        print grid.display_grid().replace('0', ' ').replace('1', '*')
+
+        import time; time.sleep(0.1)
+        grid = grid.compute_next_gen()
 
 # -------------------------------------------------------------------------------
 
 def test_init():
-    test_array = [ [ 1, 1, 1, 1, 1], 
-                  [ 1, 1, 1, 1, 1], 
-                  [ 1, 1, 1, 1, 1], 
-                  [ 1, 1, 1, 1, 1] ]
+    test_array = [ [ 0, 0, 0, 0, 0], 
+                  [ 0, 1, 1, 1, 0], 
+                  [ 0, 1, 1, 1, 0], 
+                  [ 0, 0, 0, 0, 0] ]
 
     grid = Grid()
     grid.init_grid_from(test_array)
 
-    print grid.display_grid()
     assert grid.shape() == (5, 4)
 
+    computed_str = grid.compute_next_gen().display_grid()
+
+    assert computed_str == "00100\n" + "01010\n" + "01010\n" + "00100"
 
