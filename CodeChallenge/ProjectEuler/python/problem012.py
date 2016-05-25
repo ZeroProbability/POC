@@ -1,39 +1,32 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from math import sqrt
+from itertools import imap
 
 def read_test_cases():
     number_of_tests=int(raw_input())
     test_cases=[int(raw_input()) for x in xrange(number_of_tests)]
     return test_cases
 
-def find_factors(n):
-    sum_up=n*(n+1)/2
-    for i in xrange(1, int(sqrt(sum_up))+1):
-        if sum_up % i == 0:
-            yield i
-            if sum_up > 1: 
-                yield sum_up/i
-
-global_cache = {}
-
-def check(n):
-    i = 1
-    if global_cache.get(n):
-        return global_cache.get(n)[1]
+def generate_factors(n):
+    if n == 1:
+        yield 1
     else:
-        i = max([0]+ map(lambda x: x[0], global_cache.values())) 
-    while True:
-        divisors=list(find_factors(i))
-        if(len(divisors) > n):
-            global_cache[n] = (i, max(divisors))
-            print global_cache[n][1]
-            break
-        i += 1
+        for i in xrange(1, int(sqrt(n))+1):
+            if n % i == 0:
+                yield i
+                if n/i > i : 
+                    yield n/i
+
+def sum_up_to(n):
+    return n * (n + 1) / 2
 
 def main():
-    for n in read_test_cases():
-        check(n)
+    for n in count(1):
+        sum = sum_up_to(n)
+        factors = imap(generate_factors, sums)
+        collected_factors = imap(list, factors)
+        print map(len, list(collected_factors))
 
 if __name__ == '__main__':
     main()
@@ -41,4 +34,8 @@ if __name__ == '__main__':
 #------------------------------------------------------------------------
 
 def test_something():
-    assert 1 == 2
+    assert list(generate_factors(1)) == [1]
+    assert list(generate_factors(3)) == [1, 3]
+    assert set(generate_factors(10)) == set([1, 2, 5, 10])
+    assert set(generate_factors(12)) == set([1, 2, 3, 4, 6, 12])
+
