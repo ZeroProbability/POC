@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from tkinter import *
+import random
 
 class Grid(object):
 
@@ -59,6 +60,16 @@ class MyWorld(object):
         #self.timer.start()
         self.w.create_rectangle(20, 20, 20, 20, fill="#FF0000", width=0)
 
+        grid_array = []
+        for y in xrange(600/20):
+            row = []
+            for x in xrange(800/20):
+                row.append(random.randint(0, 1))
+            grid_array.append(row)
+
+        self._grid = Grid(grid_array)
+        self.draw_grid(self._grid)
+
         mainloop()
 
     def draw_cell(self, y, x, alive=True):
@@ -69,28 +80,18 @@ class MyWorld(object):
             fill_color = "#55FF55"
         else:
             fill_color = "#FF0000"
-        #self.w.create_rectangle(xstart, ystart, 20, 20, fill=fill_color, width=0)
+        print xstart, ystart, fill_color
+        self.w.create_rectangle(xstart, ystart, 20, 20, fill=fill_color, width=1)
+        variable=raw_input("message")
 
-    def draw_grid(self, grid_array):
+    def draw_grid(self, grid):
+        grid_array = grid._grid
         for x in xrange(800/20):
             for y in xrange(600/20):
                 self.draw_cell(y, x, grid_array[y][x] == 1)
 
     def start_universe(self):
-        import random
-        grid_array = []
-        for y in xrange(600/20):
-            row = []
-            for x in xrange(800/20):
-                row.append(random.randint(0, 1))
-            grid_array.append(row)
-
-        grid = Grid(grid_array)
-        while True:
-            self.draw_grid(grid._grid)
-            grid = grid.compute_next_grid()
-            import time
-            time.sleep(0.1)
+        grid = grid.compute_next_grid()
 
 def main():
     x = MyWorld()
