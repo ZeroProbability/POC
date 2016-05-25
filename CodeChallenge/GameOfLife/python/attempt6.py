@@ -54,9 +54,12 @@ class MyWorld(object):
 
     def __init__(self):
         master = Tk()
-        self.w = Canvas(master, width=800, height=600)
-        self.w.create_rectangle(20, 20, 20, 20, fill="#FF0000", width=0)
+        self.w = Canvas(master, width=810, height=610)
         self.w.pack()
+        self.w.create_rectangle(20, 20, 40, 40, fill="red", width=1)
+        for i in xrange(20):
+            self.draw_cell(i, i, False)
+        self.w.update()
 
         grid_array = []
         for y in xrange(600/20):
@@ -68,19 +71,17 @@ class MyWorld(object):
         self._grid = Grid(grid_array)
         self.draw_grid(self._grid)
 
-        mainloop()
+        self.start()
 
     def draw_cell(self, y, x, alive=True):
         ystart = y * 20
         xstart = x * 20
-        import pdb; pdb.set_trace()
-        time.sleep(1)
 
         if alive:
             fill_color = "#55FF55"
         else:
             fill_color = "#FF0000"
-        self.w.create_rectangle(xstart, ystart, 20, 20, fill=fill_color, width=1)
+        self.w.create_rectangle(xstart, ystart, xstart + 20, ystart + 20, fill=fill_color, width=0)
 
     def draw_grid(self, grid):
         grid_array = grid._grid
@@ -88,10 +89,14 @@ class MyWorld(object):
             for y in xrange(600/20):
                 self.draw_cell(y, x, grid_array[y][x] == 1)
 
+        print "drawing ==>"
         self.w.update()
 
-    def start_universe(self):
-        grid = grid.compute_next_grid()
+    def start(self):
+        while True:
+            grid = self._grid.compute_next_grid()
+            time.sleep(1)
+            self.draw_grid(grid)
 
 def main():
     x = MyWorld()
