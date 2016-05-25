@@ -20,7 +20,17 @@ class Grid(object):
             else:
                 self._lenx = 0
 
-        
+    def _compute_next_cell(self, y, x):
+        xmin = 0 if x == 0 else x -1
+        xmax = self._lenx - 1 if x == self._lenx - 1 else x + 1
+
+    def compute_next_grid(self):
+        new_grid = []
+        for y in self._leny:
+            new_grid_row = []
+            for x in self._lenx:
+                new_grid._row.append(self._compute_next_cell(y, x))
+
 
 
 def main():
