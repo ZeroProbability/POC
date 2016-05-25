@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-
 matrix = [
         " 1  2  3  4  5".split(),
         "11 12 13 14 15".split(),
         "21 22 23 24 25".split(),
         "31 32 33 34 35".split(),
-        "99 42 43 44 45".split()
+        "41 42 43 44 45".split()
         ]
 
-for i in xrange(20):
-    matrix = []
-    matrix += raw_input().split()
+#for i in xrange(20):
+#    matrix += raw_input().split()
 
 def read_horizontals(length):
     for y in xrange(len(matrix)):
@@ -49,7 +47,7 @@ def all_products(length):
         yield reduce(lambda acc, x: acc * x, i, 1)
 
 if __name__ == '__main__':
-    print max(all_products(2))
+    print max(all_products(4))
 
 
 #-------------------------------------------------------------------------------
