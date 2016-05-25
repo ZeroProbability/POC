@@ -2,7 +2,6 @@
 # encoding: utf-8
 from math import sqrt
 
-
 def read_test_cases():
     number_of_tests=int(raw_input())
     test_cases=[int(raw_input()) for x in xrange(number_of_tests)]
@@ -16,14 +15,21 @@ def find_factors(n):
             if sum_up > 1: 
                 yield sum_up/i
 
+global_cache = {}
+
 def check(n):
-    i = 0
+    i = 1
+    if global_cache.get(n):
+        return global_cache.get(n)[1]
+    else:
+        i = max([0]+ map(lambda x: x[0], global_cache.values())) 
     while True:
-        i += 1
         divisors=list(find_factors(i))
         if(len(divisors) > n):
-            print max(divisors)
+            global_cache[n] = (i, max(divisors))
+            print global_cache[n][1]
             break
+        i += 1
 
 def main():
     for n in read_test_cases():
