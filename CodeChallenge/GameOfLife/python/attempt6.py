@@ -54,9 +54,14 @@ class MyWorld(object):
         master = Tk()
         self.w = Canvas(master, width=800, height=600)
         self.w.pack()
+        import threading
+        self.timer = threading.Timer( 0.1, self.start_universe) 
+        self.timer.start()
+
         mainloop()
 
     def draw_cell(self, y, x, alive=True):
+        import pdb; pdb.set_trace()
         ystart = y * 20
         xstart = x * 20
 
@@ -64,14 +69,31 @@ class MyWorld(object):
             fill_color = "#55FF55"
         else:
             fill_color = "#FF0000"
-        self.w.create_rectangle(xstart, ystart, 20, 20, fill="#55FF55", width=0)
+        self.w.create_rectangle(xstart, ystart, 20, 20, fill=fill_color, width=0)
 
+    def draw_grid(self, grid):
+        for x in xrange(800/20):
+            for y in xrange(600/20):
+                self.draw_cell(y, x, grid[y][x] == 1)
 
+    def start_universe(self):
+        import random
+        grid_array = []
+        for x in xrange(800/20):
+            row = []
+            for y in xrange(600/20):
+                row.append(random.randint(0, 1))
+            grid_array.append(row)
 
+        grid = Grid(grid_array)
+        while True:
+            self.draw_grid(grid._grid)
+            grid = grid.compute_next_grid()
+            import time
+            time.sleep(0.1)
 
 def main():
-    MyWorld()
-    
+    x = MyWorld()
 
 if __name__ == '__main__':
     main()
