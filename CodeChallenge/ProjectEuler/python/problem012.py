@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from math import sqrt
-from itertools import imap
+from itertools import imap,count
 
 def read_test_cases():
     number_of_tests=int(raw_input())
@@ -21,15 +21,31 @@ def generate_factors(n):
 def sum_up_to(n):
     return n * (n + 1) / 2
 
-def main():
+global_cache = {}
+def find_number_with(max_factor_count):
+    if global_cache.get(max_factor_count):
+        return global_cache[max_factor_count]
+
     for n in count(1):
-        sum = sum_up_to(n)
-        factors = imap(generate_factors, sums)
-        collected_factors = imap(list, factors)
-        print map(len, list(collected_factors))
+        sum_n = sum_up_to(n)
+        factors = list(generate_factors(sum_n))
+
+        len_f = len(factors)
+        print 'got here ', len_f-1, sum_n
+        if not global_cache.get(len_f-1):
+            mk  = max([0] + global_cache.keys())
+            for k in set(range(len_f)) - set(global_cache.keys()):
+                global_cache[k] = sum_n
+            print global_cache
+
+        #print global_cache
+
+        if len(factors) > max_factor_count:
+            return sum_n
 
 if __name__ == '__main__':
-    main()
+    for c in read_test_cases():
+        print find_number_with(c)
 
 #------------------------------------------------------------------------
 
