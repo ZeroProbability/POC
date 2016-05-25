@@ -2,6 +2,7 @@
 # encoding: utf-8
 from tkinter import *
 import random
+import time
 
 class Grid(object):
 
@@ -54,11 +55,8 @@ class MyWorld(object):
     def __init__(self):
         master = Tk()
         self.w = Canvas(master, width=800, height=600)
-        self.w.pack()
-        import threading
-        #self.timer = threading.Timer( 0.1, self.start_universe) 
-        #self.timer.start()
         self.w.create_rectangle(20, 20, 20, 20, fill="#FF0000", width=0)
+        self.w.pack()
 
         grid_array = []
         for y in xrange(600/20):
@@ -75,20 +73,22 @@ class MyWorld(object):
     def draw_cell(self, y, x, alive=True):
         ystart = y * 20
         xstart = x * 20
+        import pdb; pdb.set_trace()
+        time.sleep(1)
 
         if alive:
             fill_color = "#55FF55"
         else:
             fill_color = "#FF0000"
-        print xstart, ystart, fill_color
         self.w.create_rectangle(xstart, ystart, 20, 20, fill=fill_color, width=1)
-        variable=raw_input("message")
 
     def draw_grid(self, grid):
         grid_array = grid._grid
         for x in xrange(800/20):
             for y in xrange(600/20):
                 self.draw_cell(y, x, grid_array[y][x] == 1)
+
+        self.w.update()
 
     def start_universe(self):
         grid = grid.compute_next_grid()
