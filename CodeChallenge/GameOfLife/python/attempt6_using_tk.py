@@ -54,17 +54,14 @@ class MyWorld(object):
 
     def __init__(self):
         master = Tk()
-        self.w = Canvas(master, width=810, height=610)
+        self.w = Canvas(master, width=810, height=610, bg="white")
         self.w.pack()
-        self.w.create_rectangle(20, 20, 40, 40, fill="red", width=1)
-        for i in xrange(20):
-            self.draw_cell(i, i, False)
         self.w.update()
 
         grid_array = []
-        for y in xrange(600/20):
+        for y in xrange(600/5):
             row = []
-            for x in xrange(800/20):
+            for x in xrange(800/5):
                 row.append(random.randint(0, 1))
             grid_array.append(row)
 
@@ -74,29 +71,27 @@ class MyWorld(object):
         self.start()
 
     def draw_cell(self, y, x, alive=True):
-        ystart = y * 20
-        xstart = x * 20
+        ystart = y * 5
+        xstart = x * 5
 
         if alive:
             fill_color = "#55FF55"
-        else:
-            fill_color = "#FF0000"
-        self.w.create_rectangle(xstart, ystart, xstart + 20, ystart + 20, fill=fill_color, width=0)
+            r=self.w.create_rectangle(xstart, ystart, xstart + 5, ystart + 5, fill=fill_color, width=0)
 
     def draw_grid(self, grid):
+        self.w.delete("all")
         grid_array = grid._grid
-        for x in xrange(800/20):
-            for y in xrange(600/20):
+        for x in xrange(800/5):
+            for y in xrange(600/5):
                 self.draw_cell(y, x, grid_array[y][x] == 1)
 
-        print "drawing ==>"
         self.w.update()
 
     def start(self):
         while True:
-            grid = self._grid.compute_next_grid()
-            time.sleep(1)
-            self.draw_grid(grid)
+            self._grid = self._grid.compute_next_grid()
+            time.sleep(0.01)
+            self.draw_grid(self._grid)
 
 def main():
     x = MyWorld()
