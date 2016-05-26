@@ -30,12 +30,20 @@ def read_test_cases():
     for _ in xrange(number_of_tests):
         yield int(raw_input())
 
+@memoize
+def max_len_under(n):
+    if n == 1:
+        return (1, 1)
+    for i in xrange(1, n):
+        max_len_under(i)
+    if chain_len_of(n)[1] >= max_len_under(n-1)[1]:
+        return chain_len_of(n)
+    else:
+        return max_len_under(n-1)
 
 def main():
     for c in read_test_cases():
-        chain_lens = itertools.imap(chain_len_of, xrange(c, 0, -1))
-        print max([x[1] for x in chain_lens])
-
+        print max_len_under(c)[0]
 
 if __name__ == '__main__':
     main()
