@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import curses
-from curses import win
+import time
 
 RIGHT = (0, 1)
 LEFT = (0, -1)
@@ -24,11 +24,11 @@ class Board(object):
         curses.noecho()
         curses.curs_set(0)
         win.border()
-        win.nodelay(0)
+        win.nodelay(1)
         self._win = win
+        return self
 
     def __exit__(self, *args):
-        key = self._win.getch()
         curses.endwin()
 
     def show_score(self):
@@ -40,9 +40,12 @@ class Board(object):
     def addch(self, y, x, char):
         self._win.addch(y, x, char)
 
+    def addstr(self, y, x, string):
+        self._win.addstr(y, x, string)
+
 class Snake(object):
 
-    def __init__(self, board=None, coordinates=None, direction = None):
+    def __init__(self, board, coordinates=None, direction = None):
         self._board = board
         if coordinates == None:
             self._coordinates = [ (10, 3), (10, 4),(10, 5),(10, 6),(10, 7) ]
@@ -54,7 +57,10 @@ class Snake(object):
         else:
             self._direction = direction
 
-    def move(self):
+    def move(self, key=None):
+        if key == curses.KEY_UP and not self._direction == DOWN:
+            self._direction == UP
+
         head = self._coordinates[-1]
         new_head = (head[0] + self._direction[0], head[1]+ self._direction[1])
 
@@ -62,14 +68,23 @@ class Snake(object):
 
         self._coordinates.append(new_head)
 
+        if not self._board is None:
+            self._board.addch(new_head[0], new_head[1], '#')
+            self._board.addch(tail[0], tail[1], ' ')
+
+
     def draw(self):
         for c in self._coordinates:
             self._board.addch(c[0], c[1], '#')
 
 if __name__ == '__main__':
     with Board() as board:
-        snake = Snake(board)
+        snake = Snake(board=board)
         snake.draw()
+        while True:
+            key = board._win.getch()
+            snake.move(key)
+            time.sleep(0.05)
 
 #-------------------------------------------------------------------------------
 
