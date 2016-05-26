@@ -1,7 +1,8 @@
 import functools
 import itertools
 
-cache = {1: 1}
+cache = [None] * 5000000
+cache[1] = 1
 
 max_len_cache = [None] * 5000000  # preallocate
 last_populated = 1
@@ -18,10 +19,10 @@ def f(n):
     return 3 * n + 1
 
 def len_chain_f(n):
-    if cache.get(n):
+    if n < 5000000 and cache[n]:
         return cache[n]
     next_n = f(n)
-    if cache.get(next_n):
+    if n < 5000000 and next_n < 5000000 and cache[next_n]:
         cache[n] = 1 + cache[next_n]
         return cache[n]
     return 1 + len_chain_f(f(n))
