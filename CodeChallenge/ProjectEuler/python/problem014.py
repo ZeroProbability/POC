@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import functools
+import itertools
 
 def memoize(obj):
     cache = obj.cache = {}
@@ -19,16 +20,10 @@ def f(n):
     return 3 * n + 1
 
 @memoize
-def chain_f(n):
+def chain_len_of(n):
     if n == 1:
-        return [1]
-    return [n] + chain_f(f(n))
-
-def max_chain_len_under(n):
-    for i in xrange(n+1):
-        chain = chain_f(i)
-
-
+        return (1, 1)
+    return (n, 1 + chain_len_of(f(n))[1])
 
 def read_test_cases():
     number_of_tests=int(raw_input())
@@ -38,8 +33,8 @@ def read_test_cases():
 
 def main():
     for c in read_test_cases():
-        chain = chain_f(c)
-        len_c = len(chain)
+        chain_lens = itertools.imap(chain_len_of, xrange(c, 0, -1))
+        print max([x[1] for x in chain_lens])
 
 
 if __name__ == '__main__':
