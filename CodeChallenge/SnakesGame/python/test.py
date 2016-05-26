@@ -1,5 +1,5 @@
-# SNAKES GAME
-# Use ARROW KEYS to play, SPACE BAR for pausing/resuming and Esc Key for exiting
+#!/usr/bin/env python
+# encoding: utf-8
 
 import curses
 
@@ -36,8 +36,13 @@ import curses
 #curses.endwin()                         # de-initialize library and return 
 #                                        # window to normal mode
 
+UP = (-1, 0)
+DOWN = (1, 0)
+LEFT = (0, -1)
+RIGHT = (0, 1)
+
 class Board(object):
-    def __init__(object, beginx=0, beginy=0, width=80, height=30):
+    def __init__(self, beginx=0, beginy=0, width=80, height=30):
         self._beginx = beginx
         self._beginy = beginy
         self._width = width
@@ -45,19 +50,46 @@ class Board(object):
 
     def __enter__(self):
         curses.initscr()                        
-        win = curses.newwin(self._height, self._width, self._height, self._width)       
+        win = curses.newwin(self._height, self._width, self._beginy, self._beginx)       
                # height, width, top, left       
         win.keypad(1)                           
         curses.noecho()                         
         curses.curs_set(0)                      
         win.border()                            
         win.nodelay(0)                          
-        key = win.getch()                       
+        self._win = win
+        return self
 
     def __exit__(self, *args):
+        key = self._win.getch()                       
         curses.endwin()
 
-if __name__ == '__main__':
-    with Board():
-        pass
+    def draw_char(self, y, x, char):
+        self._win.addch(y, x, char)
 
+class Snake(object):
+    def __init__(self, board):
+        self._cordinates = [(10,3), (10,4), (10,5)]
+        self._direction = RIGHT
+        self._board = board
+
+    def move(self):
+        head = list(self._cordinates[-1])
+        head[0] += self._direction[0]
+        head[1] += self._direction[1]
+        self._cordinates.append(tuple(head))
+        self._board.draw_char(head[0], head[1], '#')
+        tail = self._cordinates.pop()
+        self._board.draw_char(tail[0], tail[1], ' ')
+
+    def draw(self):
+        for c in self._cordinates:
+            self._board.draw_char(c[0], c[1], '#')
+
+if __name__ == '__main__':
+    with Board() as b:
+        snake = Snake(b)
+        snake.draw()
+        while True:
+            snake.move()
+            import time; time.sleep(1)
