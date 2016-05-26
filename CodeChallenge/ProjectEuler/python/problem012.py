@@ -2,25 +2,37 @@
 # encoding: utf-8
 import math 
 from collections import Counter
+import functools
 
 def read_test_cases():
     number_of_tests=int(raw_input())
     test_cases=[int(raw_input()) for x in xrange(number_of_tests)]
     return test_cases
 
+def memoize(obj):
+    cache = obj.cache = {}
+
+    @functools.wraps(obj)
+    def memoizer(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = obj(*args, **kwargs)
+        return cache[key]
+    return memoizer
+
+@memoize
 def generate_prime_factors(n):
     while n % 2 == 0:
-        yield 2
-        n /= 2
+        return [2] + generate_prime_factors(n/2)
 
     upto = int(math.sqrt(n)) + 1
     for i in xrange(3, upto, 2):
         while n % i == 0:
-            yield i
-            n /= i
+            return [i] + generate_prime_factors(n/i)
 
     if n > 1:
-        yield n
+        return [n]
+    return []
 
 def factor_count(n):
     if n == 1:
@@ -31,24 +43,14 @@ def factor_count(n):
 def sum_up_to(n):
     return n * (n+1) / 2
 
-global_cache = {}
-
+@memoize
 def answer_for(max_factor_count):
-    if global_cache.get(max_factor_count):
-        return global_cache.get(max_factor_count)
-
-    i = max([1] + global_cache.keys())
+    i = 1
 
     while True:
         sum_up = sum_up_to(i)
         factor_count_of_sum = factor_count(sum_up)
 
-        if not global_cache.get(factor_count_of_sum-1):
-            mk  = max([0] + global_cache.keys())
-            for k in set(range(factor_count_of_sum)) - set(global_cache.keys()):
-                global_cache[k] = sum_up
-            #print global_cache
-        
         if factor_count_of_sum > max_factor_count:
             return sum_up
         i += 1
