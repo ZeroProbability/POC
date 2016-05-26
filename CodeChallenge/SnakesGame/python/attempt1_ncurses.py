@@ -15,6 +15,7 @@ class Board(object):
         self._beginy = beginy
         self._width = width
         self._height = height
+        self._score = 0
 
     def __enter__(self):
         curses.initscr()                        
@@ -27,12 +28,14 @@ class Board(object):
         win.nodelay(1)                          
         self._win = win
         self._game_over = False
-        self.place_apple()
         return self
 
     def __exit__(self, *args):
         key = self._win.getch()                       
         curses.endwin()
+
+    def is_game_over(self):
+        return self._game_over
 
     def draw_char(self, y, x, char):
         self._win.addch(y, x, char)
@@ -40,11 +43,21 @@ class Board(object):
     def getch(self):
         return self._win.getch()
 
-    def place_apple(self):
+    def place_apple(self, snake_cordinates):
         x = random.randint(1, self._width-2)
         y = random.randint(1, self._height-2)
 
+        self._apple = (y, x)
+
         self.draw_char(y, x, '*')
+
+    def is_apple(self, y, x):
+        return self._apple[0] == y and self._apple[1] == x
+
+    def display_score(self, increment=False):
+        if increment:
+            self._score += 1 
+        self._win.addstr(0, 3, "Score : %5d"%self._score)
 
     def endgame(self):
         self._win.addstr(3, 3, "Game over!!")
@@ -69,11 +82,16 @@ class Snake(object):
             or head[1] in ( self._board._beginx, self._board._beginx + self._board._width - 1) \
             or tuple(head) in self._cordinates:
                 self._board.endgame()
+                return 
 
         self._cordinates.append(tuple(head))
         self._board.draw_char(head[0], head[1], '#')
-        tail = self._cordinates.pop(0)
-        self._board.draw_char(tail[0], tail[1], ' ')
+        if self._board.is_apple(head[0], head[1]):
+            self._board.place_apple(self._cordinates)
+            self._board.display_score(increment=True)
+        else:
+            tail = self._cordinates.pop(0)
+            self._board.draw_char(tail[0], tail[1], ' ')
 
     def draw(self):
         for c in self._cordinates:
@@ -92,11 +110,19 @@ class Snake(object):
             pass
 
 if __name__ == '__main__':
+    final_score = 0
     with Board() as b:
         snake = Snake(b)
         snake.draw()
+        b.place_apple(snake._cordinates)
+        b.display_score()
         while True:
             snake.move()
             user_key = b.getch()
             snake.change_direction(user_key)
             import time; time.sleep(0.1)
+            if b.is_game_over():
+                final_score = b._score
+                break
+
+    print "Your score was ", final_score
