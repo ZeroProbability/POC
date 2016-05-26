@@ -38,6 +38,7 @@ curses.endwin()                         # de-initialize library and return
                                         # window to normal mode
 
 
+
 class Board(object):
 
     """Docstring for Board. """
@@ -47,11 +48,30 @@ class Board(object):
         self._xlen = xlen
         self._ybegin = ybegin
         self._ybegin = ybegin
+        self._score = 0
+        self._is_over = False
         
     def show_score(self):
         pass
 
     def is_over(self):
         pass
+
+    def place_apple(self):
+        pass
+
+class Snake(object):
+
+    def __init__(self, cordinates=None):
+        if cordinates == None:
+            self._cordinates = [(10, 3), (10, 4), (10, 5), (10, 6), (10, 7)]
+        else:
+            self._cordinates = cordinates
+
+        self._direction = RIGHT
+
+    def move(self):
+
+
 
 
