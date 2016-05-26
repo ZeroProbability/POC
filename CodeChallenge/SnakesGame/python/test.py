@@ -56,7 +56,7 @@ class Board(object):
         curses.noecho()                         
         curses.curs_set(0)                      
         win.border()                            
-        win.nodelay(0)                          
+        win.nodelay(1)                          
         self._win = win
         return self
 
@@ -67,9 +67,18 @@ class Board(object):
     def draw_char(self, y, x, char):
         self._win.addch(y, x, char)
 
+    def getch(self):
+        return self._win.getch()
+
+    def endgame(self):
+        self._win.addstr(3, 3, "Game over!!")
+        pass
+
+
 class Snake(object):
     def __init__(self, board):
         self._cordinates = [(10,3), (10,4), (10,5)]
+        self._cordinates
         self._direction = RIGHT
         self._board = board
 
@@ -79,12 +88,24 @@ class Snake(object):
         head[1] += self._direction[1]
         self._cordinates.append(tuple(head))
         self._board.draw_char(head[0], head[1], '#')
-        tail = self._cordinates.pop()
+        tail = self._cordinates.pop(0)
         self._board.draw_char(tail[0], tail[1], ' ')
 
     def draw(self):
         for c in self._cordinates:
             self._board.draw_char(c[0], c[1], '#')
+
+    def change_direction(self, key):
+        if key == curses.KEY_LEFT and not self._direction == RIGHT:
+            self._direction = LEFT
+        elif key == curses.KEY_RIGHT and not self._direction == LEFT:
+            self._direction = RIGHT
+        elif key == curses.KEY_UP and not self._direction == DOWN:
+            self._direction = UP
+        elif key == curses.KEY_DOWN and not self._direction == UP:
+            self._direction = DOWN
+        else:
+            pass
 
 if __name__ == '__main__':
     with Board() as b:
@@ -92,4 +113,6 @@ if __name__ == '__main__':
         snake.draw()
         while True:
             snake.move()
-            import time; time.sleep(1)
+            user_key = b.getch()
+            snake.change_direction(user_key)
+            import time; time.sleep(0.1)
