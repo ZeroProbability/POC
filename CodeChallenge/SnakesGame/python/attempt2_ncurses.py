@@ -2,98 +2,73 @@
 # encoding: utf-8
 import curses
 
-UP  = (-1, 0)
-DOWN  = (1, 0)
-RIGHT  = (0, 1)
-LEFT  = (0, -1)
+UP = (-1, 0)
+DOWN = (1, 0)
+LEFT = (0, -1)
+RIGHT = (0, 1)
 
 class Snake(object):
+
     def __init__(self, coordinates=None):
-        self._coordinates = coordinates if coordinates is not None \
-                else [(10, i) for i in xrange(3, 9)]
+        self.coordinates = coordinates if coordinates is not None \
+                else [(10, i) for i in xrange(3, 7)]
 
-    def head(self):
-        return self._coordinates[-1]
 
-    def tail(self, pop=True):
-        if pop:
-            return self._coordinates.pop(0)
-        else:
-            return self._coordinates[0]
+    def add_head(self, direction):
+        current_head = self.coordinates[-1]
+        new_head = (current_head[0] + direction[0], 
+                current_head[1] + direction[1])
+        self.coordinates.append(new_head)
+        return new_head
 
-    def add_head(self, new_head):
-        self._coordinates.append(new_head)
-        
+    def pop_tail(self):
+        return self.coordinates.pop(0)
+
 
 class Board(object):
-    def __init__(self, starty=0, startx=0, leny=30, lenx=80):
-        self.starty = starty
-        self.startx = startx
-        self.leny = leny
-        self.lenx = lenx
-        self.game_ended = False
+
+    def __init__(self, starty = 0, startx = 0, leny = 30, lenx = 80):
+        self.startx, self.starty, self.lenx, self.leny = \
+                startx, starty, lenx, leny
 
         self.snake = Snake()
-
         self.snake_direction = RIGHT
 
-        self.apple_location = self.place_apple()
+    def move_snake(self):
+        self.snake.add_head(self.snake_direction)
+        self.snake.pop_tail()
 
-    def next_iteration(self, direction=None):
-        if direction is None:
-            direction = self.snake_direction
-
-        current_head = self.snake.head()
-        new_head = (current_head[0] + self.snake_direction[0], 
-                       current_head[1] + self.snake_direction[1])
-
-        self.snake.add_head(new_head)
-        current_tail = self.snake.tail(pop = True)
+    def change_direction(self, new_direction):
+        self.snake_direction = new_direction
 
 
-    def place_apple(self):
-        pass
-
-        
 class BoardView(object):
 
     def __init__(self, board):
         self.board = board
 
-    def __enter__(self):
-        board = self.board
-
+    def render(self):
         curses.initscr()
-        window = curses.newwin(board.leny, board.lenx, board.starty, board.startx)
-        window.keypad(1)
+        win = curses.newwin(20, 60, 0, 0)
+        win.keypad(1)
         curses.noecho()
         curses.curs_set(0)
-        window.border()
-        window.nodelay(0)
-
-        self.window = window
-        
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        key = self.window.getch()
+        win.border()
+        win.nodelay(0)
+        key = win.getch()
         curses.endwin()
-    
-    def render(self):
-        pass
 
-if __name__ == '__main__':
-    board = Board()
-    with BoardView(board) as view:
-        pass
-
-#-------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 
 def test_board():
     board = Board()
-    assert board.snake._coordinates == [(10, i) for i in range(3, 9)]
+    assert board.snake.coordinates == [(10, 3), (10, 4), (10, 5), (10, 6)]
 
-    board.next_iteration()
-    assert board.snake._coordinates == [(10, i) for i in range(4, 10)]
+    board.move_snake()
+    assert board.snake.coordinates == [(10, 4), (10, 5), (10, 6), (10, 7)]
+
+    board.change_direction(UP)
+    board.move_snake()
+    assert board.snake.coordinates == [(10, 5), (10, 6), (10, 7), (9, 7)]
 
 
