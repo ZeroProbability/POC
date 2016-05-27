@@ -9,11 +9,14 @@ DOWN = (1, 0)
 LEFT = (0, -1)
 RIGHT = (0, 1)
 
+class GameOver(Exception):
+    pass
+
 class Snake(object):
 
-    def __init__(self, coordinates=None):
+    def __init__(self, coordinates=None, default_length=4):
         self.coordinates = coordinates if coordinates is not None \
-                else [(10, i) for i in xrange(3, 7)]
+                else [(10, i) for i in xrange(3, 3+default_length)]
 
 
     def add_head(self, direction):
@@ -32,26 +35,33 @@ class Snake(object):
 
 class Board(object):
 
-    def __init__(self, starty = 0, startx = 0, leny = 30, lenx = 80):
+    def __init__(self, starty = 0, startx = 0, leny = 30, lenx = 80, default_length=4):
         self.startx, self.starty, self.lenx, self.leny = \
                 startx, starty, lenx, leny
 
-        self.snake = Snake()
+        self.snake = Snake(default_length=default_length)
         self.snake_direction = RIGHT
         self.place_apple_at_random()
+        self.score = 0
 
     def move_snake(self):
         new_head = self.snake.add_head(self.snake_direction)
+
+        if new_head in self.snake.coordinates[:-1]:
+            raise GameOver("GameOver: Your score was {}".format(self.score))
+
         if new_head[0] == self.starty:
             self.snake.set_head((self.starty + self.leny -2, new_head[1]))
-        if new_head[0] == self.starty + self.leny - 1:
+        elif new_head[0] == self.starty + self.leny - 1:
             self.snake.set_head((self.starty + 1, new_head[1]))
         if new_head[1] == self.startx:
             self.snake.set_head((new_head[0], self.startx + self.lenx -2))
-        if new_head[1] == self.startx + self.lenx - 1:
+        elif new_head[1] == self.startx + self.lenx - 1:
             self.snake.set_head((new_head[0], self.startx + 1))
+
         if new_head == self.apple_location:
             self.place_apple_at_random()
+            self.score += 1
         else:
             self.snake.pop_tail()
 
@@ -106,6 +116,8 @@ class BoardView(object):
         self.window.addch(self.board.apple_location[0], 
                 self.board.apple_location[1], '*')
 
+        self.window.addstr(0, 3, ' Score : %5d '%(self.board.score))
+
     def handle_key(self, key):
         self.window.addstr( 3, 3, str(key))
         if key == curses.KEY_UP and not board.snake_direction == DOWN:
@@ -120,17 +132,21 @@ class BoardView(object):
             pass # just ignore
 
 if __name__ == '__main__':
-    board = Board()
+    board = Board(default_length=20)
 
-    with BoardView(board) as view:
-        view.render()
-
-        while True:
-            time.sleep(0.10)
-            key = view.window.getch()
-            view.handle_key(key)
-            board.move_snake()
+    try:
+        with BoardView(board) as view:
             view.render()
+
+            while True:
+                time.sleep(0.10)
+                key = view.window.getch()
+                view.handle_key(key)
+                board.move_snake()
+                view.render()
+    except GameOver as g:
+        print g.message
+
 
 #--------------------------------------------------------------------------------
 
