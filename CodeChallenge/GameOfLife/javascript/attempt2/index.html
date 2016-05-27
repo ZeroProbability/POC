@@ -13,9 +13,38 @@
         var ctx = c.getContext("2d");
         var leny = 500/10;
         var lenx = 800/10;
-
+        var y, x;
         ctx.fillStyle = "#FF0000";
-        ctx.fillRect(0,0,150,75);
+
+        var gridrow=[];
+        var grid=[];
+        for(y=0; y < leny; y++) {
+            gridrow=[];
+            for(x=0; x<lenx; x++) {
+                gridrow.push(Math.random() > 0.5);
+            }
+            grid.push(gridrow);
+        }
+
+        var paintGrid=function(grid) {
+            var g = new GameOfLife(grid);
+            for(y=0; y < leny; y++) {
+                for(x=0; x<lenx; x++) {
+                    if(grid[y][x]) {
+                        ctx.fillRect(x*10, y*10, x*10+10, y*10+10);
+                    } else {
+                        ctx.clearRect(x*10, y*10, x*10+10, y*10+10);
+                    }
+                }
+            }
+            var next_grid = g.computeNextBoard();
+            setTimeout(function() {paintGrid(next_grid)} , 10);
+
+        }
+        
+        paintGrid(grid);
+
+
         
 
     </script>
