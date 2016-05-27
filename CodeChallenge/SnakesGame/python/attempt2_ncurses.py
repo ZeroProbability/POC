@@ -38,8 +38,13 @@ class Board(object):
         self.place_apple_at_random()
 
     def move_snake(self):
+        import pdb; pdb.set_trace()
         new_head = self.snake.add_head(self.snake_direction)
-        if not new_head == self.apple_location:
+        if new_head[0] == self.starty:
+            self.snake.set_head(self.starty + self.leny -2)
+        if new_head == self.apple_location:
+            self.place_apple_at_random()
+        else:
             self.snake.pop_tail()
 
     def change_direction(self, new_direction):
@@ -50,14 +55,12 @@ class Board(object):
         for y in xrange(self.starty + 1, self.starty + self.leny - 2):
             for x in xrange(self.startx + 1, self.startx + self.lenx -2):
                 all_coordinates.add((y, x))
-        import pdb; pdb.set_trace()
 
         all_coordinates.difference_update(self.snake.coordinates)
 
-        random_location = random.sample(all_coordinates, 1)
+        random_location = random.sample(all_coordinates, 1)[0]
 
         self.place_apple_at(random_location[0], random_location[1])
-
 
     def place_apple_at(self, y, x):
         self.apple_location = (y, x)
@@ -92,6 +95,9 @@ class BoardView(object):
         for c in self.board.snake.coordinates:
             self.window.addch(c[0], c[1], '#')
 
+        self.window.addch(self.board.apple_location[0], 
+                self.board.apple_location[1], '*')
+
     def handle_key(self, key):
         self.window.addstr( 3, 3, str(key))
         if key == curses.KEY_UP and not board.snake_direction == DOWN:
@@ -112,7 +118,7 @@ if __name__ == '__main__':
         view.render()
 
         while True:
-            time.sleep(0.1)
+            time.sleep(0.05)
             key = view.window.getch()
             view.handle_key(key)
             board.move_snake()
@@ -122,16 +128,25 @@ if __name__ == '__main__':
 
 def test_board():
     board = Board()
-    assert board.snake.coordinates == [(10, 3), (10, 4), (10, 5), (10, 6)]
+    board.place_apple_at(1,1)
 
-    board.move_snake()
-    assert board.snake.coordinates == [(10, 4), (10, 5), (10, 6), (10, 7)]
+#   assert board.snake.coordinates == [(10, 3), (10, 4), (10, 5), (10, 6)]
 
+#   board.move_snake()
+#   assert board.snake.coordinates == [(10, 4), (10, 5), (10, 6), (10, 7)]
+
+#   board.change_direction(UP)
+#   board.move_snake()
+#   assert board.snake.coordinates == [(10, 5), (10, 6), (10, 7), (9, 7)]
+
+#   board.place_apple_at(8, 7)
+#   board.move_snake()
+#   assert board.snake.coordinates == [(10, 5), (10, 6), (10, 7), (9, 7), (8, 7)]
+#   assert not board.apple_location == (8, 7)
+
+    board.snake.coordinates = [(3, 30), (2, 30)]
     board.change_direction(UP)
     board.move_snake()
-    assert board.snake.coordinates == [(10, 5), (10, 6), (10, 7), (9, 7)]
 
-    board.place_apple_at(8, 7)
-    board.move_snake()
-    assert board.snake.coordinates == [(10, 5), (10, 6), (10, 7), (9, 7), (8, 7)]
+    assert board.snake.coordinates == [(2, 30), (28, 30)]
 
