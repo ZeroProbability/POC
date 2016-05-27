@@ -17,7 +17,7 @@ describe("GameOfLifeSpec", function() {
             [ false,  false,  true, false, false] 
     ];
 
-    expect(gameOfLife.compute_next_board()).toEqual(expectedOuput);
+    expect(gameOfLife.computeNextBoard()).toEqual(expectedOuput);
 
   });
 
