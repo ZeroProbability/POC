@@ -1,9 +1,12 @@
-describe("GameOfLife", function() {
-  var GameOfLifeTest = require('../lib/GameOfLife.js');
+describe("GameOfLifeSpec", function() {
+  var GameOfLife = require('../lib/GameOfLife.js');
   var gameOfLife;
 
+  beforeEach(function() {
+    gameOfLife = new GameOfLife();
+  });
+
   it("should be able to compute next version of grid", function() {
-    gameOfLife = new GameOfLife([[1,2], [2,3]]);
 
   });
 
