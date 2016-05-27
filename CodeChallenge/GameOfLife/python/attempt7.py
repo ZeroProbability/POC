@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
+import os
+import random
+import time
 
 class Grid(object):
 
@@ -20,7 +23,15 @@ class Grid(object):
         return inst
 
     def init_random(self):
-        pass # todo
+        grid_array = []
+        for y in xrange(self._leny):
+            grid_row = []
+            for x in xrange(self._lenx):
+                grid_row.append(random.randint(0,1))
+
+            grid_array.append(grid_row)
+
+        self._grid_array = grid_array
 
     def compute_next_at(self, y, x):
         miny = 0 if y == 0 else y - 1
@@ -53,18 +64,36 @@ class Grid(object):
 
         return new_grid_array
 
+    def cell_alive_at(self, y, x):
+        return self._grid_array[y][x] == 1
 
 class GridView(object):
 
     def __init__(self, grid):
         self.grid = grid
 
+    def set_grid(self, grid):
+        self.grid = grid
 
     def render(self):
-        for y in xrange(self.grid.leny):
-            for x in xrange(self.grid.lenx):
+        for y in xrange(self.grid._leny):
+            for x in xrange(self.grid._lenx):
+                print '*' if self.grid.cell_alive_at(y, x) else ' ',
+            print ''
 
 
+if __name__ == '__main__':
+    grid = Grid(leny=50, lenx=80)
+    grid.init_random()
+    gv = GridView(grid)
+
+    while(True):
+        os.system('clear')
+        gv.render()
+        time.sleep(0.1)
+        new_grid_array = grid.compute_next_array()
+        grid = Grid.from_array(new_grid_array)
+        gv.set_grid(grid)
         
 
 #-------------------------------------------------------------------------------
