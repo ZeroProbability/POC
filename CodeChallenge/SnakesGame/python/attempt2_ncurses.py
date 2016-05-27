@@ -3,7 +3,7 @@
 import curses
 import time
 import random
-from unittest.mock import MagicMock
+from unittest import MagicMock
 
 UP = (-1, 0)
 DOWN = (1, 0)
