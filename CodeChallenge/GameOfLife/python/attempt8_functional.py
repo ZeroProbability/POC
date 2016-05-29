@@ -64,6 +64,7 @@ def compute_next_grid(grid):
     all_neighbours = grid.all_neighbours()
     new_grid = Grid()
     for (y, x) in all_neighbours:
+        print "considering {}", (y,x)
         live_count = len(grid.live_neighbours_of(y, x))
         new_cell = compute_next_cell_state(LiveCell() if grid.is_live(y,x) else DeadCell(), live_count)
         if new_cell.is_live():
