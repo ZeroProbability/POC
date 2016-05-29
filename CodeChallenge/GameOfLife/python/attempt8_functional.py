@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
+import random
+import os
 
 LIVE = 1
 DEAD = 0
@@ -66,10 +68,19 @@ class Grid(object):
         superset = set()
         for (y, x) in self._live_cells:
             for yi in xrange(y-1, y+2):
-                for xi in xrange(x-1, y+2): 
+                for xi in xrange(x-1, x+2): 
                     superset.add((yi, xi))
 
         return superset
+
+    def display(self):
+        for y in xrange(-10, 20):
+            for x in xrange(-10, 40):
+                if (y, x) in self._live_cells:
+                    print '\033[92m' + u'\u25A0' + '\033[0m', 
+                else:
+                    print ' ',
+            print ''
 
 
 def compute_next_grid(grid):
@@ -77,9 +88,7 @@ def compute_next_grid(grid):
     new_grid = Grid()
     for (y, x) in all_neighbours:
         live_count = len(grid.live_neighbours_of(y, x))
-        print "{} {} => {}".format(y, x, live_count)
         new_cell = compute_next_gen_cell(grid.get_cell_at(y, x), live_count)
-
         if new_cell == LiveCell:
             new_grid.create_cell_at(y, x)
 
@@ -87,7 +96,18 @@ def compute_next_grid(grid):
 
 
 def main():
-    print "this works!!!"
+    grid = Grid()
+    for y in xrange(10):
+        for x in xrange(10):
+            if random.randint(0, 7) < 1:
+                grid.create_cell_at(y, x)
+
+    while True:
+        grid.display()
+        grid = compute_next_grid(grid)
+        import time;time.sleep(0.1)
+        os.system('clear')
+
 
 if __name__ == '__main__':
     main()
