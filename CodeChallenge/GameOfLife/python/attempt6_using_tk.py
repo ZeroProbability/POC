@@ -115,4 +115,4 @@ def test_nothing():
 
     print next_grid._grid
     
-    assert 1 == 2
+    assert 0 == 2

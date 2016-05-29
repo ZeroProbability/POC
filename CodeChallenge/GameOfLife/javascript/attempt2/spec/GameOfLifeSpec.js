@@ -1,10 +1,25 @@
-describe("Player", function() {
-  var Player = require('../lib/GameOfLife.js');
+describe("GameOfLifeSpec", function() {
+  var GameOfLife = require('../lib/GameOfLife.js');
+  var gameOfLife;
 
-  it("should be able to play a Song", function() {
-    expect(player.currentlyPlayingSong).toEqual(song);
+  it("should be able to compute next version of grid", function() {
+    gameOfLife = new GameOfLife([    
+            [ false,  false, false, false, false] ,
+            [ false,   true,  true,  true, false] ,
+            [ false,   true,  true,  true, false] ,
+            [ false,  false, false, false, false] 
+            ]);
 
-    expect(player).toBePlaying(song);
+    expectedOuput = [
+            [ false,  false,  true, false, false] ,
+            [ false,   true, false,  true, false] ,
+            [ false,   true, false,  true, false] ,
+            [ false,  false,  true, false, false] 
+    ];
+
+    expect(gameOfLife.computeNextBoard()).toEqual(expectedOuput);
+
   });
 
 });
+
