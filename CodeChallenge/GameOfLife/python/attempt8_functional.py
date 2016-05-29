@@ -74,13 +74,14 @@ class Grid(object):
         return superset
 
     def display(self):
-        for y in xrange(-10, 20):
-            for x in xrange(-10, 40):
+        for y in xrange(-10, 30):
+            for x in xrange(-10, 50):
                 if (y, x) in self._live_cells:
                     print '\033[92m' + u'\u25A0' + '\033[0m', 
                 else:
                     print ' ',
             print ''
+        print "population size : %20d"%(len(self._live_cells))
 
 
 def compute_next_grid(grid):
@@ -97,16 +98,19 @@ def compute_next_grid(grid):
 
 def main():
     grid = Grid()
-    for y in xrange(10):
-        for x in xrange(10):
-            if random.randint(0, 7) < 1:
+    for y in xrange(15):
+        for x in xrange(11):
+            if random.randint(0, 10) < 1:
                 grid.create_cell_at(y, x)
 
+    generation_count = 1
     while True:
         grid.display()
+        print "Generation number: %6d"%(generation_count)
         grid = compute_next_grid(grid)
         import time;time.sleep(0.1)
         os.system('clear')
+        generation_count += 1
 
 
 if __name__ == '__main__':
