@@ -4,7 +4,7 @@
 to_twenty= ['', 'One' , 'Two' , 'Three' , 'Four' , 'Five' , 'Six' , 'Seven' , 'Eight' , 'Nine' , 'Ten' ,
          'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Ninteeen', 'Twenty']
 
-tens = [ '', 'Ten', 'Twenty', 'Thirty', 'Fourty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety', 'Hundred']
+tens = [ '', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety', 'Hundred']
 
 bigs = ['', 'Thousand', 'Million', 'Billion', 'Trillion']
 
@@ -42,10 +42,12 @@ def main():
             next_suffix = tbigs.pop(0)
             r = []
             for c in split_into_thousands(tcase):
-                r.insert(' '.join([c, handle_to_thousand(c), next_suffix]))
+                r.insert(0, ' '.join([handle_to_thousand(c), next_suffix if c > 0 else '']))
                 next_suffix = tbigs.pop(0)
-            print ' '.join(r)
-
+            answer= ' '.join(r)
+            while answer.find('  ') >= 0:
+                answer = answer.replace('  ', ' ')
+            print answer
 
 if __name__ == '__main__':
     main()
