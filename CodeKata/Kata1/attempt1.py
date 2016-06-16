@@ -5,21 +5,42 @@ class Passenger(object):
     def __init__(self, current_floor):
         self.current_floor = current_floor
 
+class LiftAction(object):
+    def __init__(self, name, *args, **kwargs):
+        self.name = name
+        self.args = args
+        self.kwargs = kwargs
+
 class Lift(object):
     def __init__(self):
         self.busy = False
         self.current_floor = 1
         self.doors_open = False
+        self.action_plan = []
 
-    def goto(self, request_init_floor):
-        self.busy = True
+    def select_floor(self, destination, *args, **kwargs):
+        self.action_plan.append(LiftAction('close_door'))
 
-        self.close_door()
-        self.current_floor = request_init_floor
+        #return actions_performed
+
+    def open_door(self, *args, **kwargs):
         self.doors_open = True
 
-    def close_door(self):
-        print 'door is closing'
+    def close_door(self, *args, **kwargs):
+        self.doors_open = False
+
+    def perform(self, action, *args, **kwargs):
+        self.__getattribute__(action)(*args, **kwargs)
+
+    def _perform_actions(self, action_list, *args, **kwargs):
+        for action in action_list:
+            self.perform(action, *args, **kwargs)
+
+    def perform_next_action(self):
+        action = self.action_plan.pop(0)
+        action_result = self.perform(action.name, action.args, action.kwargs)
+        return action_result
+
 
 class LiftScheduler(object):
     def __init__(self, number_of_lifts):
@@ -39,24 +60,18 @@ if __name__ == '__main__':
 
 #------------------------------------------------------------------------
 
-def test_passenger_calls_lift():
-    passenger = Passenger(1)
-    lift_scheduler = LiftScheduler(1)
+def test_lift_door_close():
+    lift = Lift()
+    lift.perform('close_door')
 
-    lift = lift_scheduler.create_floor_request(passenger.current_floor, True)
-    
-    assert lift.current_floor == 1
-    assert lift.doors_open == True
-    assert lift.busy == True
+    assert not lift.doors_open
 
-def test_passenger_select_destination():
-    passenger = Passenger(1)
-    lift_scheduler = LiftScheduler(1)
-
-    lift = lift_scheduler.create_floor_request(passenger.current_floor, True)
-    lift.goto(2)
-
-    assert lift.current_floor == 2
-    assert lift.doors_open == True
+    lift.perform('open_door')
+    assert lift.doors_open
     
 
+def test_lift_door_close():
+    lift = Lift()
+    lift.select_floor(2)
+
+    assert not lift.doors_open
