@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-class Passenger(object):
-    def __init__(self, current_floor):
-        self.current_floor = current_floor
-
 class LiftAction(object):
     def __init__(self, name, *args, **kwargs):
         self.name = name
@@ -12,44 +8,53 @@ class LiftAction(object):
         self.kwargs = kwargs
 
 class Lift(object):
-    def __init__(self):
-        self.busy = False
+    def __init__(self, lift_id):
+        self.lift_id = lift_id
         self.current_floor = 1
         self.doors_open = False
         self.action_plan = []
 
-    def select_floor(self, destination, *args, **kwargs):
-        self.action_plan.append(LiftAction('close_door'))
+    def is_busy(self):
+        return len(self.action_plan) > 0
 
-        #return actions_performed
+    def goto_floor(self, destination, *args):
+        self.current_floor = destination
+
+        return "moved to floor {}".format(destination)
+
+    def select_floor(self, destination):
+        ''' Passenger selects a floor '''
+        self.action_plan.append(LiftAction('close_door'))
+        self.action_plan.append(LiftAction('goto_floor', destination))
+        self.action_plan.append(LiftAction('open_door'))
 
     def open_door(self, *args, **kwargs):
         self.doors_open = True
 
+        return 'doors open'
+
     def close_door(self, *args, **kwargs):
         self.doors_open = False
 
-    def perform(self, action, *args, **kwargs):
-        self.__getattribute__(action)(*args, **kwargs)
+        return 'doors closed'
 
-    def _perform_actions(self, action_list, *args, **kwargs):
-        for action in action_list:
-            self.perform(action, *args, **kwargs)
+    def perform(self, action, *args, **kwargs):
+        return self.__getattribute__(action)(*args, **kwargs)
 
     def perform_next_action(self):
         action = self.action_plan.pop(0)
-        action_result = self.perform(action.name, action.args, action.kwargs)
+        action_result = self.perform(action.name, *(action.args), **(action.kwargs))
         return action_result
 
 
 class LiftScheduler(object):
     def __init__(self, number_of_lifts):
         self.requests = []
-        self.lifts = [Lift() for _ in xrange(number_of_lifts)]
+        self.lifts = [Lift(lift_id) for lift_id in xrange(1, number_of_lifts+1)]
 
     def create_floor_request(self, request_init_floor, going_up):
-        first_free_lift = self.lifts[0]
-        first_free_lift.goto(request_init_floor)
+        first_free_lift = [ lift for lift in self.lifts if not lift.is_busy ][0]
+        first_free_lift
         return first_free_lift
 
 def main():
@@ -61,17 +66,19 @@ if __name__ == '__main__':
 #------------------------------------------------------------------------
 
 def test_lift_door_close():
-    lift = Lift()
-    lift.perform('close_door')
-
-    assert not lift.doors_open
-
-    lift.perform('open_door')
-    assert lift.doors_open
-    
-
-def test_lift_door_close():
-    lift = Lift()
+    lift = Lift(1)
     lift.select_floor(2)
 
-    assert not lift.doors_open
+    assert 'doors closed' == lift.perform_next_action()
+    assert 'moved to floor 2' == lift.perform_next_action()
+    assert 'doors open' == lift.perform_next_action()
+
+def test_schedule_new_passenger():
+    lift_scheduler = LiftScheduler(2)
+
+    lift = lift_scheduler.create_floor_request(3, False)
+    assert lift.lift_id == 1
+
+    lift = lift_scheduler.create_floor_request(3, False)
+    assert lift.lift_id == 2
+
