@@ -5,3 +5,5 @@ bin
 .classpath
 test-output
 .gradle
+ajcore.*.txt
+

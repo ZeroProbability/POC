@@ -1,15 +1,15 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-project.ext.set('aspectjVersion','1.6.2');apply plugin: 'aspectj'
+project.ext.set('aspectjVersion','1.8.9');apply plugin: 'aspectj'
 
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 
 apply plugin: 'tomcat'
 
-sourceCompatibility=1.6
-targetCompatibility=1.6
+sourceCompatibility=1.8
+targetCompatibility=1.8
 
 description = 'Test project to see how AspectJ will work with Tomcat'
 
@@ -34,7 +34,8 @@ repositories {
 
 dependencies {
     provided "org.apache.tomcat:tomcat-servlet-api:7.0.42"
-    compile "org.aspectj:aspectjlib:${project.aspectjVersion}"
+    compile "org.aspectj:aspectjrt:${project.aspectjVersion}"
+    compile "org.aspectj:aspectjweaver:${project.aspectjVersion}"
     testCompile "junit:junit:4.7"
     testCompile "org.mockito:mockito-all:1.8.2"
     /* for tomcat */
