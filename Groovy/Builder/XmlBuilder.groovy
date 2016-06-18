@@ -1,6 +1,6 @@
 def builder = new groovy.xml.MarkupBuilder()
 
-builder.numbers {
+result = builder.numbers {
     description 'Squares and factors of 10..15'
     
     for(i in 10..15) {
@@ -12,5 +12,6 @@ builder.numbers {
            }
         }
     }
-}
+}.toString()
 
+println result
