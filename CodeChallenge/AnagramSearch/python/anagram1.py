@@ -42,7 +42,7 @@ class WordTree(object):
     def __init__(self, words_iter):
         self.__top_node = WordNode("")
         for word in words_iter:
-            self.__top_node.insert_word(word)
+            self.__top_node.insert_word(word.lower())
 
     def is_word_present(self, word):
         chars = list(word.lower())
@@ -72,9 +72,10 @@ class Anagrams(object):
         self._word_tree = WordTree((w.rstrip().lower() for w in self.words))
 
     def get_anagrams(self, word):
+        word = word.lower()
         word_len = len(word)
         ret_list = []
-        for ana_word in (''.join(w) for w in itertools.permutations(word.lower())):
+        for ana_word in (''.join(w) for w in itertools.permutations(word)):
             if self._word_tree.is_word_present(ana_word):
                 ret_list.append(ana_word)
 
@@ -87,6 +88,16 @@ class TestWordTree(unittest.TestCase):
         self.assertFalse(tree.is_word_present("other"))
         self.assertTrue(tree.is_word_present("some"))
 
+    def test_adding_a_word_ignore_case(self):
+        tree = WordTree(["some"])
+        self.assertTrue(tree.is_word_present("SOME"))
+        self.assertTrue(tree.is_word_present("SoMe"))
+
+        tree = WordTree(["sOmE"])
+        self.assertTrue(tree.is_word_present("SOME"))
+        self.assertTrue(tree.is_word_present("SoMe"))
+
+    def test_adding_two_words(self):
         tree = WordTree(["some", "someother"])
         self.assertFalse(tree.is_word_present("other"))
         self.assertTrue(tree.is_word_present("some"))
@@ -95,6 +106,7 @@ class TestWordTree(unittest.TestCase):
         self.assertFalse(tree.is_word_present("someother1"))
         self.assertFalse(tree.is_word_present("somex"))
 
+    def test_adding_anagram_words(self):
         tree = WordTree(["eat", "tea"])
         self.assertTrue(tree.is_word_present("eat"))
         self.assertTrue(tree.is_word_present("EAT"))
