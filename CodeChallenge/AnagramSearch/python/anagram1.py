@@ -18,10 +18,23 @@ class WordNode(object):
     def insert_word(self, word):
         first_char = word[0]
         rest = word[1:]
+        print "{} inserting {}".format(first_char, rest)
+
         if rest == "":
+            new_child = WordNode(first_char)
+            self._children[first_char] = new_child
             self._is_a_word = True
             return word
         
+        if self._children.get(first_char) is None:
+            new_child = WordNode(first_char)
+            self._children[first_char] = new_child
+            new_child.insert_word(rest)
+        else:
+            self._children.get(first_char).insert_word(rest)
+
+    def get(self, child_char):
+        return self._children.get(child_char)
 
 class WordTree(object):
     def __init__(self):
@@ -31,7 +44,16 @@ class WordTree(object):
         self._top_node.insert_word(word)
 
     def is_word_present(self, word):
-        pass
+        current_search_head = self._top_node
+        for next_char in word:
+            print "searching for {}".format(next_char)
+            child_node = current_search_head.get(next_char)
+            if child_node is None:
+                print "child node is None"
+                return False
+            else:
+                current_search_head = child_node
+        return True
 
 class Anagrams(object):
 
@@ -46,8 +68,14 @@ class TestWordTree(unittest.TestCase):
     def test_adding_a_word(self):
         tree = WordTree()
         tree.insert_word("some")
-        self.assertTrue(tree.is_word_present("some"))
         self.assertFalse(tree.is_word_present("other"))
+        self.assertTrue(tree.is_word_present("some"))
+
+        tree.insert_word("someother")
+        self.assertFalse(tree.is_word_present("other"))
+        self.assertTrue(tree.is_word_present("some"))
+        self.assertFalse(tree.is_word_present("someo"))
+        self.assertTrue(tree.is_word_present("someother"))
 
         
 #class TestAnagrams(unittest.TestCase):
