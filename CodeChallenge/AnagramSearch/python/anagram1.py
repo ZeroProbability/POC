@@ -23,7 +23,8 @@ class WordNode(object):
         if rest == "":
             new_child = WordNode(first_char)
             self._children[first_char] = new_child
-            self._is_a_word = True
+            print "setting {} is word".format(new_child._node_char)
+            new_child.is_a_word = True
             return word
         
         if self._children.get(first_char) is None:
@@ -44,16 +45,21 @@ class WordTree(object):
         self._top_node.insert_word(word)
 
     def is_word_present(self, word):
+        chars = list(word)
         current_search_head = self._top_node
-        for next_char in word:
-            print "searching for {}".format(next_char)
-            child_node = current_search_head.get(next_char)
-            if child_node is None:
-                print "child node is None"
+        last_node_is_word = False
+
+        while True: 
+            c = chars.pop(0)
+            print "searching {}".format(c)
+            if len(chars) == 0:
+                return current_search_head._is_a_word
+
+            next_head = current_search_head.get(c)
+            if next_head == None:
                 return False
-            else:
-                current_search_head = child_node
-        return True
+
+        return last_node_is_word
 
 class Anagrams(object):
 
