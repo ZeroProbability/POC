@@ -8,6 +8,7 @@
 #   - Thread safe implementation
 
 import unittest
+import itertools
 
 class WordNode(object):
     def __init__(self, node_char):
@@ -18,13 +19,13 @@ class WordNode(object):
     def insert_word(self, word):
         first_char = word[0]
         rest = word[1:]
-        print "{} inserting {}".format(first_char, rest)
+        #print "{} inserting {}".format(first_char, rest)
 
         if rest == "":
             new_child = WordNode(first_char)
             self._children[first_char] = new_child
-            print "setting {} is word".format(new_child._node_char)
-            new_child.is_a_word = True
+            #print "setting {} is word".format(new_child._node_char)
+            new_child._is_a_word = True
             return word
         
         if self._children.get(first_char) is None:
@@ -47,27 +48,40 @@ class WordTree(object):
     def is_word_present(self, word):
         chars = list(word)
         current_search_head = self._top_node
-        last_node_is_word = False
 
         while True: 
             c = chars.pop(0)
-            print "searching {}".format(c)
-            if len(chars) == 0:
-                return current_search_head._is_a_word
-
+            #print "searching {}".format(c)
             next_head = current_search_head.get(c)
             if next_head == None:
                 return False
 
-        return last_node_is_word
+            if len(chars) == 0:
+                #print "{} is {}".format(next_head._node_char, next_head._is_a_word)
+                return next_head._is_a_word
+
+
+            current_search_head = next_head
+
 
 class Anagrams(object):
 
     def __init__(self):
         self.words = open('words.txt').readlines()
+        self._word_tree = WordTree()
+        for word in self.words:
+            self._word_tree.insert_word(word.rstrip())
 
     def get_anagrams(self, word):
-        pass
+        word_len = len(word)
+        ret_list = []
+        for ana_word in itertools.permutations(word):
+            #print "searcing {}".format(''.join(ana_word))
+            full_word = ''.join(ana_word)
+            if self._word_tree.is_word_present(full_word):
+                ret_list.append(full_word)
+
+        return ret_list
 
 class TestWordTree(unittest.TestCase):
 
@@ -82,15 +96,21 @@ class TestWordTree(unittest.TestCase):
         self.assertTrue(tree.is_word_present("some"))
         self.assertFalse(tree.is_word_present("someo"))
         self.assertTrue(tree.is_word_present("someother"))
+        self.assertFalse(tree.is_word_present("someother1"))
+        self.assertFalse(tree.is_word_present("somex"))
 
+        tree.insert_word("eat")
+        tree.insert_word("tea")
+        self.assertTrue(tree.is_word_present("eat"))
+        self.assertTrue(tree.is_word_present("tea"))
         
-#class TestAnagrams(unittest.TestCase):
-#
-#    def test_anagrams(self):
-#        anagrams = Anagrams()
-#
-#        self.assertEquals(anagrams.get_anagrams('pears'), ['pares', 'parse', 'pears', 'rapes', 'reaps', 'spare', 'spear'])
-#        self.assertEquals(anagrams.get_anagrams('eat'), ['ate', 'eat', 'tea'])
+class TestAnagrams(unittest.TestCase):
+
+    def test_anagrams(self):
+        anagrams = Anagrams()
+
+        self.assertEquals(sorted(anagrams.get_anagrams('eat')), ['ate', 'eat', 'tea'])
+        self.assertEquals(sorted(anagrams.get_anagrams('pears')), ['pares', 'parse', 'pears', 'rapes', 'reaps', 'spare', 'spear'])
 
 if __name__ == '__main__':
     unittest.main()
