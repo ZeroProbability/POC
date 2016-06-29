@@ -3,10 +3,10 @@
 
 import itertools
 
-capacity = 10
+capacity = 20
 
-weights = [1, 3, 4, 7, 9]
-benefit = [3, 2, 5, 4, 3]
+weights = [1, 3, 4, 7, 9, 5, 3, 2, 4, 6, 1, 2, 3, 5, 7]
+benefit = [3, 2, 5, 4, 3, 3, 2, 4, 5, 7, 3, 9, 7, 4, 2]
 
 def possibilities():
     for itemcount in xrange(1, len(weights)+1):
