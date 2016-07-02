@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # encoding: utf-8
 
 def read_test_cases():
@@ -56,13 +55,13 @@ def days_between(start_date, end_date):
 def find_weekday(year, month, day):
     weekday_on_first_jan = 1
     for y in xrange(1901, year + 1):
-        weekday_on_first_jan += 2 if is_leap_year(year-1) else 1
+        weekday_on_first_jan += 2 if is_leap_year(y-1) else 1
 
     days_in_that_year = 0
-    for m in (1, month-1):
+    for m in xrange(1, month):
         days_in_that_year += days_in_month(m, year)
 
-    days_in_that_year += day
+    days_in_that_year += (day - 1)
 
     weekday = (days_in_that_year + weekday_on_first_jan) % 7
 
@@ -85,7 +84,6 @@ def first_of_each_month(start_date, end_date):
             yield(year1, m, 1)
 
         for y in xrange(year1+1, year2):
-            print y
             for m in xrange(1, 13):
                 yield(y, m, 1)
 
@@ -95,7 +93,6 @@ def first_of_each_month(start_date, end_date):
 def main():
     def is_a_sunday(dt):
         v = 1 if find_weekday(*dt) == 0 else 0
-        print dt, find_weekday(*dt)
         return v
 
     for start_date, end_date in read_test_cases():
@@ -132,5 +129,10 @@ def test_weekday_on_first_jan():
     assert find_weekday(1909, 2, 1) == 1
     assert find_weekday(1900, 1, 1) == 1
     assert find_weekday(1901, 1, 1) == 2
+    assert find_weekday(1902, 1, 1) == 3
+    assert find_weekday(1903, 1, 1) == 4
+    assert find_weekday(1904, 1, 1) == 5
+    assert find_weekday(1905, 1, 1) == 0
     assert find_weekday(1900, 1, 2) == 2
     assert find_weekday(2016, 7, 2) == 6
+    assert find_weekday(2000, 1, 1) == 6
