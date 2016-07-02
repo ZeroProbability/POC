@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from datetime import date
 
 def read_test_cases():
     number_of_tests=int(raw_input())
@@ -60,7 +59,7 @@ def find_weekday(year, month, day):
         weekday_on_first_jan += 2 if is_leap_year(year-1) else 1
 
     days_in_that_year = 0
-    for m in (1, month):
+    for m in (1, month-1):
         days_in_that_year += days_in_month(m, year)
 
     days_in_that_year += day
@@ -69,9 +68,38 @@ def find_weekday(year, month, day):
 
     return weekday
 
+def first_of_each_month(start_date, end_date):
+    year1, month1, day1 = start_date
+    year2, month2, day2 = end_date
+
+    start_month = month1 if day1 == 1 else month1 + 1
+    end_month = month2 
+
+    if year1 == year2:
+        for m in xrange(month1+1, month2):
+            yield (year1, m, 1)
+    else:
+        start_month = month1 if day1 == 1 else month1 + 1
+
+        for m in xrange(start_month, 13):
+            yield(year1, m, 1)
+
+        for y in xrange(year1+1, year2):
+            print y
+            for m in xrange(1, 13):
+                yield(y, m, 1)
+
+        for m in xrange(1, month2+1):
+            yield(year2, m, 1)
+
 def main():
+    def is_a_sunday(dt):
+        v = 1 if find_weekday(*dt) == 0 else 0
+        print dt, find_weekday(*dt)
+        return v
+
     for start_date, end_date in read_test_cases():
-        print days_between(start_date, end_date)
+        print sum(map(is_a_sunday, first_of_each_month(start_date, end_date)))
 
 if __name__ == '__main__':
     main()
@@ -101,6 +129,7 @@ def test_date_diff():
     assert days_between((1900, 1, 1), (1900, 1, 1)) == 1
 
 def test_weekday_on_first_jan():
+    assert find_weekday(1909, 2, 1) == 1
     assert find_weekday(1900, 1, 1) == 1
     assert find_weekday(1901, 1, 1) == 2
     assert find_weekday(1900, 1, 2) == 2
