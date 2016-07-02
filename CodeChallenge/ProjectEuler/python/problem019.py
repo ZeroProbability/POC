@@ -24,7 +24,7 @@ def days_in_month(month, year):
     return 30
 
 def days_between(start_date, end_date):
-    """ start_date and end_date as (yyyy, mm, dd) """
+    """ start_date and end_date as (year, month, date) """
     year1, month1, day1 = start_date
     year2, month2, day2 = end_date
 
@@ -39,14 +39,35 @@ def days_between(start_date, end_date):
 
         for m in xrange(1, month2):
             days_count += days_in_month(m, year2)
-    else:
-        for m in xrange(month1 + 2, month2):
-            days_count += days_in_month(m, year2)
 
-    days_count += days_in_month(month1, year1) - day1 + 1
-    days_count += day2 
+        days_count += days_in_month(month1, year1) - day1 + 1
+        days_count += day2 
+    else:
+        if month2 > month1:
+            for m in xrange(month1 + 1, month2):
+                days_count += days_in_month(m, year2)
+
+            days_count += days_in_month(month1, year1) - day1 + 1
+            days_count += day2 
+        elif day2 >= day1:
+            days_count += (day2 - day1) + 1
 
     return days_count
+
+def find_weekday(year, month, day):
+    weekday_on_first_jan = 1
+    for y in xrange(1901, year + 1):
+        weekday_on_first_jan += 2 if is_leap_year(year-1) else 1
+
+    days_in_that_year = 0
+    for m in (1, month):
+        days_in_that_year += days_in_month(m, year)
+
+    days_in_that_year += day
+
+    weekday = (days_in_that_year + weekday_on_first_jan) % 7
+
+    return weekday
 
 def main():
     for start_date, end_date in read_test_cases():
@@ -76,4 +97,11 @@ def test_date_diff():
     assert days_between((1900, 1, 1), (1903, 1, 1)) == 366 + 365 * 2
     assert days_between((1900, 1, 1), (1904, 1, 1)) == 366 + 365 * 3
     assert days_between((1900, 1, 1), (1905, 1, 1)) == 366 * 2 + 365 * 3
-    assert days_between((1900, 1, 1), (1900, 1, 1)) == 0
+    assert days_between((1900, 1, 1), (1900, 2, 1)) == 32
+    assert days_between((1900, 1, 1), (1900, 1, 1)) == 1
+
+def test_weekday_on_first_jan():
+    assert find_weekday(1900, 1, 1) == 1
+    assert find_weekday(1901, 1, 1) == 2
+    assert find_weekday(1900, 1, 2) == 2
+    assert find_weekday(2016, 7, 2) == 6
