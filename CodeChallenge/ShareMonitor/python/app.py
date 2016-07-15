@@ -17,7 +17,7 @@ def index():
 def add():
     if request.method == 'POST':
         pass
-    return render_template("index.html")
+    return render_template("add.html")
 
 @app.route("/quote")
 def quote():
