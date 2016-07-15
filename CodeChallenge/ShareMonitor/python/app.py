@@ -13,11 +13,15 @@ app.logger.setLevel(DEBUG)
 def index():
     return render_template("index.html")
 
-@app.route("/add", method=('GET', 'POST'))
+@app.route("/add", methods=('GET', 'POST'))
 def add():
     if request.method == 'POST':
         pass
     return render_template("index.html")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
     app.run(debug=True)
