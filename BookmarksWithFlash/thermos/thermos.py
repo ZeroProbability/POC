@@ -5,6 +5,7 @@ from logging import DEBUG
 
 app = Flask(__name__)
 app.logger.setLevel(DEBUG)
+app.config['SECRET_KEY']='''\x04\xd2\t>[-\x06\x06\x1ar%I\xeb\x18\xd6*\x0f~\xae\xa26\x95@\xee'''
 
 bookmarks = []
 
@@ -15,11 +16,14 @@ def store_bookmark(url):
         date = datetime.utcnow()
     ))
 
+def new_bookmarks(num):
+    return sorted(bookmarks, key=lambda bm: bm['date'], reverse=True)[:num]
+
 
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", new_bookmarks = new_bookmarks(5))
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
