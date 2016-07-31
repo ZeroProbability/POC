@@ -6,12 +6,23 @@ Add a new bookmark
 
 {% block content %} 
     <form action="add" method="post" accept-charset="utf-8">
+        {{ form.hidden_tag() }}
+        <table>
+            <tr>
+                <td>Please enter your bookmark here:</td>
+                <td>{{form.url(size = 50)}}</td>
+            </tr>
+            <tr>
+                <td>Add an optional description here</td>
+                <td>{{form.description(size = 50)}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>
         <p>
-            Enter your bookmark here:
-            <input type="text" name="url"/>
-        </p>
-        <p>
-            <button type="submit">Submit</button>
+            
         </p>
     </form>
 {% endblock %} 
