@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Add a new bookmark</title>
-    <meta charset="utf-8" />
-</head>
-<body>
-    <form action="add_submit" method="post" accept-charset="utf-8">
+{% extends "base.html" %}
+
+{% block title %} 
+Add a new bookmark
+{% endblock %} 
+
+{% block content %} 
+    <form action="add" method="post" accept-charset="utf-8">
         <p>
             Enter your bookmark here:
             <input type="text" name="url"/>
@@ -14,5 +14,8 @@
             <button type="submit">Submit</button>
         </p>
     </form>
-</body>
-</html>
+{% endblock %} 
+
+{% block sidebar %} 
+{% endblock %} 
+
