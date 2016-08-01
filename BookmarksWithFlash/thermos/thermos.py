@@ -1,5 +1,8 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
 from datetime import datetime
+import os
+
+from flask import Flask, render_template, url_for, request, redirect, flash
+from flask_sqlalchemy import SQLAlchemy
 
 from logging import DEBUG
 
@@ -8,6 +11,8 @@ from forms import BookmarksForm
 app = Flask(__name__)
 app.logger.setLevel(DEBUG)
 app.config['SECRET_KEY']='''\x04\xd2\t>[-\x06\x06\x1ar%I\xeb\x18\xd6*\x0f~\xae\xa26\x95@\xee'''
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
+db = SQLAlchemy(app)
 
 bookmarks = []
 
