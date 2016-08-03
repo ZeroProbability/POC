@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from logging import DEBUG
 
 from forms import BookmarksForm
+import models
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,14 +27,10 @@ def store_bookmark(url, description):
         date = datetime.utcnow()
     ))
 
-def new_bookmarks(num):
-    return sorted(bookmarks, key=lambda bm: bm['date'], reverse=True)[:num]
-
-
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", new_bookmarks = new_bookmarks(5))
+    return render_template("index.html", new_bookmarks = models.Bookmark.newest(5))
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
@@ -41,6 +38,9 @@ def add():
     if form.validate_on_submit():
         url = form.url.data
         description = form.description.data
+        bm = models.Bookmark(url=url, description=description)
+        db.session.add(bm)
+        db.session.commit()
         store_bookmark(url, description)
         #app.logger.debug('stored url: {}'.format(url))
         flash("Stored bookmark '{}'".format(description))
