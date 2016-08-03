@@ -7,7 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 from logging import DEBUG
 
 from forms import BookmarksForm
-import models
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -18,6 +17,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'th
 db = SQLAlchemy(app)
 
 bookmarks = []
+
+#Fake login
+def logged_in_user():
+    import models
+    return models.User.query.filter_by(username='anbu').first()
 
 def store_bookmark(url, description):
     bookmarks.append(dict(
@@ -30,16 +34,18 @@ def store_bookmark(url, description):
 @app.route("/")
 @app.route("/index")
 def index():
+    import models
     return render_template("index.html", new_bookmarks = models.Bookmark.newest(5))
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
+    import models
     form = BookmarksForm()
     if form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        bm = models.Bookmark(url=url, description=description)
-        db.session.add(bm)
+        bm = models.Bookmark(user=logged_in_user(), url=url, description=description)
+        #db.session.add(bm)
         db.session.commit()
         store_bookmark(url, description)
         #app.logger.debug('stored url: {}'.format(url))
