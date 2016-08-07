@@ -4,7 +4,7 @@
 from thermos import app, db
 from thermos.models import User
 
-from flask.ext.script import Manager, prompt_bool
+from flask_script import Manager, prompt_bool
 
 manager = Manager(app)
 
@@ -22,6 +22,9 @@ def dropdb():
         db.drop_all()
         print "dropped the database"
 
+@manager.command
+def runapp():
+    app.run(debug=True)
 
 if __name__ == '__main__':
     manager.run()

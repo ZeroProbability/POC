@@ -5,13 +5,13 @@ from flask import render_template, url_for, request, redirect, flash
 from forms import BookmarksForm
 from models import User, Bookmark
 
-from . import app, db
+from thermos import app, db
 
 #Fake login
 def logged_in_user():
     return User.query.filter_by(username='anbu').first()
 
-print '====> called once'
+print 'called once ==>'
 
 @app.route("/")
 @app.route("/index")
@@ -40,6 +40,3 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
-
-if __name__ == "__main__":
-    app.run(debug=True)
