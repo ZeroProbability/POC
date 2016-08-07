@@ -11,5 +11,5 @@ app.config['SECRET_KEY']='''\x04\xd2\t>[-\x06\x06\x1ar%I\xeb\x18\xd6*\x0f~\xae\x
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
 db = SQLAlchemy(app)
 
-import models
-import views
+from thermos import models
+from thermos import views
