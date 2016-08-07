@@ -1,18 +1,22 @@
 from datetime import datetime
 
 from flask import render_template, url_for, request, redirect, flash
-from flask_login import login_required, login_user
+from flask_login import login_required, login_user, logout_user
 
 from forms import BookmarksForm, LoginForm
 from models import User, Bookmark
 
-from thermos import app, db
+from thermos import app, db, login_manager
 
 #Fake login
 def logged_in_user():
     return User.query.filter_by(username='anbu').first()
 
 print 'called once ==>'
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(int(userid))
 
 @app.route("/")
 @app.route("/index")
@@ -54,6 +58,11 @@ def login():
             return redirect(request.args.get('next') or url_for('index'))
         flash('Incorrect username or password')
     return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def page_not_found(e):
