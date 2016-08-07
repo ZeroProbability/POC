@@ -11,8 +11,8 @@ manager = Manager(app)
 @manager.command
 def initdb():
     db.create_all()
-    db.session.add(User(username="anbu", email='anbu@example.com'))
-    db.session.add(User(username="arun", email='arun@example.com'))
+    db.session.add(User(username="anbu", email='anbu@example.com', password='test'))
+    db.session.add(User(username="arun", email='arun@example.com', password='test'))
     db.session.commit()
     print 'Initialzed the database'
 
