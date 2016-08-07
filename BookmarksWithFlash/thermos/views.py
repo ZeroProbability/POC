@@ -43,7 +43,10 @@ def user(username):
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print form.username.data
+    print form.password.data
     if form.validate_on_submit():
+        print 'username is {}'.format(form.username.data)
         user = User.query.filter_by(username = form.username.data).first()
         if user is not None:
             login_user(user, form.remember_me.data)
