@@ -2,10 +2,10 @@ from datetime import datetime
 
 from flask import render_template, url_for, request, redirect, flash
 
-from thermos.forms import BookmarksForm
-from thermos.models import User, Bookmark
+from forms import BookmarksForm
+from models import User, Bookmark
 
-from thermos import app, db
+from . import app, db
 
 #Fake login
 def logged_in_user():
