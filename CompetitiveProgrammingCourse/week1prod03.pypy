@@ -1,0 +1,14 @@
+#!/usr/bin/env pypy
+# encoding: utf-8
+
+with open('prepare.in', 'r') as input:
+    n = input.readline()
+    ti = [int(i) for i in input.readline().split(' ')]
+    pi = [int(i) for i in input.readline().split(' ')]
+
+maxscore = 0
+for i, item in enumerate(ti):
+    maxscore += max(item, pi[i])
+
+print maxscore
+
