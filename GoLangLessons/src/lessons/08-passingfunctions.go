@@ -2,13 +2,17 @@ package main
 
 import "fmt"
 
-func somefunc(otherfunc func(string)) {
-    otherfunc("blah")
+// optionally add a custom type
+type printer func(string) ()
+
+func somefunc(printfunc printer) {
+    printfunc("blah")
+}
+
+func printit(s string) {
+    fmt.Println("value = ", s)
 }
 
 func main() {
-    func test(s string) {
-        fmt.Println("value = ", s)
-    }
-    somefunc(test)
+    somefunc(printit)
 }
