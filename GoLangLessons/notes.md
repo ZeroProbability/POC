@@ -73,6 +73,5 @@ Unlike other languages, Go requires you to cast int8 to int16 when int8 value is
 
 ## Methods and Interfaces
 
-* Methods in golang can operate on a type or a pointer.
+* Methods in golang can operate on a type or a pointer to type.
 
-','.join([str(x) for x in range(20)])
