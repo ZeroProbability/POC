@@ -1,6 +1,4 @@
-# Basics
-
-## What is GO?
+# What is GO?
 
 * Go is a Compiled, Garbage-collected, and Concurrent language
 * Garbage-collection is latency free, unlike Java.
@@ -9,21 +7,21 @@
 * It is type-safe and memory-safe. Memory safefy means you can set a pointer or overflowing beyond allocated memory.
 * Semicolons are automatically inserted by the compiler at the end of lines.
 
-## What is not there in GO?
+# What is not there in GO?
 * There is no inheritance (Because composition is better). 
 * There are no generics (or templates).
 * There are no assertions.
 * There is no method overloading (thus making compilation process be simple and fast).
 
-## Packages
+# Packages
 
 * In go 'packages' are used to define namespaces. 
 * There are many predefined packages in go. They can be found in golang.org/pkg
 
-## GOPATH
+# GOPATH
 * Like Java's CLASSPATH, go has GOPATH. Go will look for source code inside 'src' subdirectory in each of the paths declared in GOPATH. 
 
-## Basic Types
+# Basic Types
 
 * bool
 * string
@@ -37,7 +35,7 @@
 Notes: 
 Unlike other languages, Go requires you to cast int8 to int16 when int8 value is assigned to variable of type int16.
 
-## Types
+# Types
 
 * Array
 * Slice - like a list
