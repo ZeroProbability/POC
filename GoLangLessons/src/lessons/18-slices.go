@@ -3,5 +3,8 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Println("Hello, Anbu")
+    // 
+    var s []int = make([]int, 3, 5)
+
+    fmt.Println(s)
 }
