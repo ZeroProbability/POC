@@ -15,9 +15,25 @@ func greet(name string) {
     }
 }
 
+// switch with fallthrough 
+func numtype(n int) {
+    switch n {
+    case 1:
+        fmt.Println(n , " is uno ")
+        fallthrough
+    default:
+        fmt.Println(n , " is a natural number")
+    }
+}
+
 func main() {
+    fmt.Println(" =========== ")
     greet("Bob")
     greet("Joe")
     greet("Mary")
     greet("Anbu")
+
+    fmt.Println(" =========== ")
+    numtype(1)
+    numtype(2)
 }
