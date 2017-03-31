@@ -46,3 +46,8 @@ Unlike other languages, Go requires you to cast int8 to int16 when int8 value is
 * Map
 * Channel - for communication
 
+# Maps
+
+* Keys have to have equality operator defined
+* Maps are reference types
+* They are not thread safe
