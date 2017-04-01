@@ -1,4 +1,4 @@
-# Notes
+# Getting started with Go
 
 ## What is GO?
 
@@ -74,4 +74,12 @@ Unlike other languages, Go requires you to cast int8 to int16 when int8 value is
 ## Methods and Interfaces
 
 * Methods in golang can operate on a type or a pointer to type.
+
+## Select statement
+
+* `select` is like a switch, but used for communication 
+* Rules
+    * Execute the case that is 'ready'
+    * If more than one is 'ready', pick one in random before moving to the next
+    * if none of them are 'ready', block unless default is defined
 
