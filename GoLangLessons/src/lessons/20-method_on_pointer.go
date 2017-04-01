@@ -2,23 +2,21 @@ package main
 
 import "fmt"
 
-type Student struct {
-    isMale bool
-    Name string
+type Numbers struct {
+    n1 int
+    n2 int
 }
 
-func (s Student) Greeting() string {
-    var greet string
-    greet = "Miss"
-    if s.isMale {
-        greet = "Mr"
-    }
-    return "Hello "+ greet + " "+ s.Name
+func (n *Numbers) swap() {
+    tmp := n.n1
+    n.n1 = n.n2
+    n.n2 = tmp
 }
 
 func main() {
-    s1 := Student { true, "Anbu" }
-    fmt.Println(s1.Greeting())
-    s2 := Student { false, "Mary" }
-    fmt.Println(s2.Greeting())
+    var n Numbers
+    n = Numbers { 1, 2 }
+    fmt.Println("Before swap...", n)
+    n.swap()
+    fmt.Println("After swap...", n)
 }
