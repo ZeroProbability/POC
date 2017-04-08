@@ -23,7 +23,8 @@ def main():
 if __name__ == '__main__':
     main()
 
-def isvalid(grid, n):
+def isvalid(grid):
+    n = len(grid)
     for row in xrange(n):
         o_count = 0
         for col in xrange(n):
@@ -38,13 +39,43 @@ def isvalid(grid, n):
                 o_count += 1
             if o_count > 1: return False
 
+    for row in xrange(n):
+        o_count = 0
+        if grid[row][row] == O:
+            o_count += 1
+
+    for row in xrange(n):
+        x_count = 0
+        for col in xrange(n):
+            if grid[row][col] == X:
+                x_count += 1
+            if x_count > 1: return False
+
+    for col in xrange(n):
+        x_count = 0
+        for row in xrange(n):
+            if grid[row][col] == X:
+                x_count += 1
+            if x_count > 1: return False
+
+    return True
+
 def arrange(n, m, ):
     pass
 
-def parse_input_grid(n, size, data_row):
+#O, X, P, E = 'o', 'x', '+', '.'
+def parse_input_grid(n, data_row):
     grid = []
     for row in xrange(n):
         grid.append([E] * n)
+
+    for i in xrange(len(data_row)):
+        d, r, c = data_row[i].split(' ')
+        r = int(r) - 1
+        c = int(c) - 1
+        ix = [O, X, P, E].index(d)
+        d = [O, X, P, E][ix]
+        grid[r][c] = d
 
     return grid
 
@@ -54,8 +85,27 @@ def print_grid(grid):
 
 #------------------------------------------------------------------------
 
-def test_valid():
-    grid = parse_input_grid(3, 0, [])
-    print_grid(grid)
-    assert 1 == 2
+def test_valid_o1():
+    grid = parse_input_grid(3, ['o 1 1', 'x 2 1', '+ 3 3'])
+    print grid
+    assert isvalid(grid)
 
+def test_valid_o2():
+    grid = parse_input_grid(3, ['o 1 1', 'o 2 1', '+ 3 3'])
+    print grid
+    assert not isvalid(grid)
+
+def test_valid_o3():
+    grid = parse_input_grid(3, ['o 1 1', 'o 1 2', '+ 3 3'])
+    print grid
+    assert not isvalid(grid)
+
+def test_valid_x1():
+    grid = parse_input_grid(3, ['x 1 1', 'x 1 2', '+ 3 3'])
+    print grid
+    assert not isvalid(grid)
+
+def test_valid_x2():
+    grid = parse_input_grid(3, ['x 1 1', 'x 2 1', '+ 3 3'])
+    print grid
+    assert not isvalid(grid)
