@@ -7,62 +7,36 @@ O, X, P, E = 'o', 'x', '+', '.'
 
 def isvalid(grid):
     n = len(grid)
-    print grid
     for row in xrange(n):
         o_count = 0
         for col in xrange(n):
-            if grid[row][col] == O:
+            if grid[row][col] in [O, X]:
                 o_count += 1
             if o_count > 1: return False
 
     for col in xrange(n):
         o_count = 0
         for row in xrange(n):
-            if grid[row][col] == O:
+            if grid[row][col] in [O, X]:
                 o_count += 1
             if o_count > 1: return False
 
     o_count = 0
     for row in xrange(n):
-        if grid[row][row] == O:
+        if grid[row][row] in [O, P]:
             o_count += 1
         if o_count > 1: return False
 
     o_count = 0
     for row in xrange(n):
-        if grid[row][n - row - 1] == O:
+        if grid[row][n - row - 1] in [O, P]:
             o_count += 1
         if o_count > 1: return False
-
-    p_count = 0
-    for row in xrange(n):
-        if grid[row][row] == P:
-            p_count += 1
-        if p_count > 1: return False
-
-    p_count = 0
-    for row in xrange(n):
-        if grid[row][n - row - 1] == P:
-            p_count += 1
-        if p_count > 1: return False
-
-    for row in xrange(n):
-        x_count = 0
-        for col in xrange(n):
-            if grid[row][col] == X:
-                x_count += 1
-            if x_count > 1: return False
-
-    for col in xrange(n):
-        x_count = 0
-        for row in xrange(n):
-            if grid[row][col] == X:
-                x_count += 1
-            if x_count > 1: return False
 
     return True
 
 def arrange(grid):
+    assign_max(grid)
     n = len(grid)
     for row in xrange(n):
         for col in xrange(n):
@@ -70,21 +44,17 @@ def arrange(grid):
                 new_grid = copy.deepcopy(grid)
                 new_grid[row][col] = O
                 if isvalid(new_grid):
-                    assign_max(new_grid)
                     arrange(new_grid)
             if grid[row][col] == E:
                 new_grid = copy.deepcopy(grid)
                 new_grid[row][col] = X
                 if isvalid(new_grid):
-                    assign_max(new_grid)
                     arrange(new_grid)
                 new_grid[row][col] = P
                 if isvalid(new_grid):
-                    assign_max(new_grid)
                     arrange(new_grid)
                 new_grid[row][col] = O
                 if isvalid(new_grid):
-                    assign_max(new_grid)
                     arrange(new_grid)
 
 
@@ -94,7 +64,7 @@ def assign_max(grid):
     global max_grid, max_score
     ts = score(grid)
     if ts > max_score:
-        max_grid = grid
+        max_grid = copy.deepcopy(grid)
         max_score = ts
 
 def score(grid):
@@ -142,7 +112,7 @@ if __name__ == '__main__':
 def test_valid_o1():
     grid = parse_input_grid(3, ['o 1 1', 'x 2 1', '+ 3 3'])
     print_grid(grid)
-    assert isvalid(grid)
+    assert not isvalid(grid)
 
 def test_valid_o2():
     grid = parse_input_grid(3, ['o 1 1', 'o 2 1', '+ 3 3'])
@@ -184,11 +154,31 @@ def test_valid_cx():
     print_grid(grid)
     assert not isvalid(grid)
 
-def test_s():
-    global max_grid
+def test_s1():
+    global max_grid, max_score
 
+    max_score = 0
     grid = parse_input_grid(2, [])
     arrange(grid)
     print_grid(max_grid)
-    assert 1 == 2
+    assert max_score == 4
+
+def test_s2():
+    global max_grid, max_score
+
+    max_score = 0
+    grid = parse_input_grid(1, ['o 1 1'])
+    arrange(grid)
+    print_grid(max_grid)
+    assert max_score == 2
+
+def test_s3():
+    global max_grid, max_score
+
+    max_score = 0
+    grid = parse_input_grid(3, ['+ 2 3', '+ 2 1', 'x 3 1', '+ 2 2'])
+    print_grid(grid)
+    arrange(grid)
+    print_grid(max_grid)
+    assert max_score == 2
 
