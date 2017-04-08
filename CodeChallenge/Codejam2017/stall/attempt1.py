@@ -21,12 +21,18 @@ def main():
 
 def split_list(l):
     m = heapq.heappop(l)
-    if (m.val - 1) % 2 == 0:
+    if m.val == 1:
+        pass # nothing to push back
+    elif m.val == 2:
+        heapq.heappush(l, MaxHeapObj(1))
+    elif (m.val - 1) % 2 == 0:
+        # odd case - can be split equally
         heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
-        if m.val > 2: heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
+        heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
     else:
+        # even case - unevenly split
         heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
-        if m.val > 1: heapq.heappush(l, MaxHeapObj((m.val - 1) / 2 + 1))
+        heapq.heappush(l, MaxHeapObj((m.val - 1) / 2 + 1))
 
 if __name__ == '__main__':
     main()
@@ -34,10 +40,23 @@ if __name__ == '__main__':
 #------------------------------------------------------------------------
 
 def test_split():
+    l = [MaxHeapObj(4)]
+    heapq.heapify(l)
+    split_list(l)
+    assert sorted([i.val for i in l]) == [1, 2]
+    split_list(l)
+    assert sorted([i.val for i in l]) == [1, 1]
+    split_list(l)
+    assert sorted([i.val for i in l]) == [1]
+    split_list(l)
+    assert sorted([i.val for i in l]) == []
+
     l = [MaxHeapObj(5)]
     heapq.heapify(l)
     split_list(l)
     assert sorted([i.val for i in l]) == [2, 2]
+    split_list(l)
+    assert sorted([i.val for i in l]) == [1, 2]
 
     l = [MaxHeapObj(6)]
     heapq.heapify(l)
@@ -46,11 +65,18 @@ def test_split():
     split_list(l)
     assert sorted([i.val for i in l]) == [1, 1, 2]
     split_list(l)
-    assert sorted([i.val for i in l]) == [0, 1, 1, 1]
+    assert sorted([i.val for i in l]) == [1, 1, 1]
     split_list(l)
-    assert sorted([i.val for i in l]) == [0, 0, 1, 1]
+    assert sorted([i.val for i in l]) == [1, 1]
+
+    l = [MaxHeapObj(1000)]
+    heapq.heapify(l)
     split_list(l)
-    assert sorted([i.val for i in l]) == [0, 0, 0, 1]
-    split_list(l)
-    assert sorted([i.val for i in l]) == [0, 0, 0, 0]
+    assert sorted([i.val for i in l]) == [499, 500]
+
+    l = [MaxHeapObj(1000000)]
+    heapq.heapify(l)
+    for i in xrange(1000000):
+        split_list(l)
+    assert sorted([i.val for i in l]) == []
 
