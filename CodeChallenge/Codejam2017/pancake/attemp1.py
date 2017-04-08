@@ -3,12 +3,11 @@
 
 from numba import jit
 
-def single_line_tests():
-    with open('testcase.txt', 'r') as test_file:
-        lines=test_file.read().splitlines()
-        number_of_tests=lines[0]
-        individual_tests=lines[1:]
-        return (number_of_tests, individual_tests)
+def main():
+    t = int(raw_input())
+    for i in xrange(1, t + 1):
+        s, k = raw_input().split(" ")
+        print "Case #{}: {}".format(i, flip(s, int(k)))
 
 @jit
 def invert(inputStr, i, k):
@@ -20,6 +19,7 @@ def invert(inputStr, i, k):
             inputList[i1] = '+'
     return ''.join(inputList)
 
+@jit
 def flip(inputStr, k):
     l = len(inputStr)
     count = 0
@@ -27,9 +27,13 @@ def flip(inputStr, k):
         if inputStr[i] == '-':
             count += 1
             inputStr = invert(inputStr, i, k)
-            print inputStr
+
+    if '-' in inputStr:
+        return "IMPOSSIBLE"
     return count
 
+if __name__ == '__main__':
+    main()
 
 #------------------------------------------------------------------------
 
@@ -42,3 +46,7 @@ def test_invert():
 def test_something():
     res = flip('---+-++-', 3)
     assert res == 3
+    res = flip('+++', 3)
+    assert res == 0
+    res = flip('-+-+-', 4)
+    assert res == 'IMPOSSIBLE'
