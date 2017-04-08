@@ -7,6 +7,7 @@ O, X, P, E = 'o', 'x', '+', '.'
 
 def isvalid(grid):
     n = len(grid)
+    print grid
     for row in xrange(n):
         o_count = 0
         for col in xrange(n):
@@ -81,6 +82,10 @@ def arrange(grid):
                 if isvalid(new_grid):
                     assign_max(new_grid)
                     arrange(new_grid)
+                new_grid[row][col] = O
+                if isvalid(new_grid):
+                    assign_max(new_grid)
+                    arrange(new_grid)
 
 
 max_grid = None
@@ -90,7 +95,7 @@ def assign_max(grid):
     ts = score(grid)
     if ts > max_score:
         max_grid = grid
-        max_score = score
+        max_score = ts
 
 def score(grid):
     n = len(grid)
@@ -174,8 +179,16 @@ def test_valid_p1():
     print_grid(grid)
     assert not isvalid(grid)
 
+def test_valid_cx():
+    grid = parse_input_grid(2, ['o 1 1', 'x 1 2', 'x 2 1', 'o 2 2'])
+    print_grid(grid)
+    assert not isvalid(grid)
+
 def test_s():
-    grid = parse_input_grid(3, ['+ 1 1', 'x 2 1', '+ 3 2'])
+    global max_grid
+
+    grid = parse_input_grid(2, [])
     arrange(grid)
+    print_grid(max_grid)
     assert 1 == 2
 
