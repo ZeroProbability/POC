@@ -36,6 +36,7 @@ def isvalid(grid):
     return True
 
 def arrange(grid):
+    grid = copy.deepcopy(grid)
     assign_max(grid)
     n = len(grid)
     for row in xrange(n):
@@ -99,9 +100,30 @@ def print_grid(grid):
     for row in xrange(len(grid)):
         print ''.join(grid[row])
 
+def print_diff(in_grid, out_grid):
+    n = len(in_grid)
+    res = []
+    for row in xrange(n):
+        for col in xrange(n):
+            if out_grid[row][col] != in_grid[row][col]:
+                res.append("{} {} {}".format(out_grid[row][col], row+1, col+1))
+
+    return res
+
 def main():
-    grid = parse_input_grid(3, ['+ 1 1', 'x 2 1', '+ 3 2'])
-    arrange(grid)
+    t = int(raw_input())
+    global max_score, max_grid
+    for i in xrange(t):
+        n, m = raw_input().split(" ")
+        n, m = int(n), int(m)
+        rows = []
+        for r in xrange(m):
+            rows.append(raw_input())
+        grid = parse_input_grid(n, rows)
+        max_score, max_grid = score(grid), grid
+        arrange(grid)
+        res = print_diff(grid, max_grid)
+        print "Case #{}: {} {}".format(i+1, max_score, len(res))
     print_grid(max_grid)
 
 if __name__ == '__main__':
@@ -177,8 +199,7 @@ def test_s3():
 
     max_score = 0
     grid = parse_input_grid(3, ['+ 2 3', '+ 2 1', 'x 3 1', '+ 2 2'])
-    print_grid(grid)
     arrange(grid)
-    print_grid(max_grid)
-    assert max_score == 2
+    print print_diff(grid, max_grid)
+    assert max_score == 8
 
