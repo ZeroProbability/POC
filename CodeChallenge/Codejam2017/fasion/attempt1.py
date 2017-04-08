@@ -5,26 +5,6 @@ import copy
 
 O, X, P, E = 'o', 'x', '+', '.'
 
-def main():
-    t = int(raw_input())
-    for i in xrange(1, t + 1):
-        n, k = (int(x) for x in raw_input().split(" "))
-        l = [MaxHeapObj(n)]
-        split_n_times(l, k-1)
-
-        if len(l) == 0:
-            print "Case #{}: 0 0".format(i)
-        else:
-            m = heapq.heappop(l).val
-            if m % 2 == 0:
-                #even 
-                print "Case #{}: {} {}".format(i, (m-1)/2 + 1, (m-1)/2)
-            else:
-                print "Case #{}: {} {}".format(i, (m-1)/2, (m-1)/2)
-
-if __name__ == '__main__':
-    main()
-
 def isvalid(grid):
     n = len(grid)
     for row in xrange(n):
@@ -89,8 +69,28 @@ def arrange(grid):
                 new_grid = copy.deepcopy(grid)
                 new_grid[row][col] = O
                 if isvalid(new_grid):
-                    print_grid(new_grid)
+                    assign_max(new_grid)
                     arrange(new_grid)
+            if grid[row][col] == E:
+                new_grid = copy.deepcopy(grid)
+                new_grid[row][col] = X
+                if isvalid(new_grid):
+                    assign_max(new_grid)
+                    arrange(new_grid)
+                new_grid[row][col] = P
+                if isvalid(new_grid):
+                    assign_max(new_grid)
+                    arrange(new_grid)
+
+
+max_grid = None
+max_score = 0
+def assign_max(grid):
+    global max_grid, max_score
+    ts = score(grid)
+    if ts > max_score:
+        max_grid = grid
+        max_score = score
 
 def score(grid):
     n = len(grid)
@@ -123,6 +123,14 @@ def parse_input_grid(n, data_row):
 def print_grid(grid):
     for row in xrange(len(grid)):
         print ''.join(grid[row])
+
+def main():
+    grid = parse_input_grid(3, ['+ 1 1', 'x 2 1', '+ 3 2'])
+    arrange(grid)
+    print_grid(max_grid)
+
+if __name__ == '__main__':
+    main()
 
 #------------------------------------------------------------------------
 
