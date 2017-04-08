@@ -124,7 +124,7 @@ def main():
         arrange(grid)
         res = print_diff(grid, max_grid)
         print "Case #{}: {} {}".format(i+1, max_score, len(res))
-    print_grid(max_grid)
+        for r in res: print r
 
 if __name__ == '__main__':
     main()
