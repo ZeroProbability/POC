@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 # encoding: utf-8
-
-from numba import jit
 
 def main():
     t = int(raw_input())
@@ -9,7 +6,6 @@ def main():
         s, k = raw_input().split(" ")
         print "Case #{}: {}".format(i, flip(s, int(k)))
 
-@jit
 def invert(inputStr, i, k):
     inputList = list(inputStr)
     for i1 in xrange(i, i + k):
@@ -19,7 +15,6 @@ def invert(inputStr, i, k):
             inputList[i1] = '+'
     return ''.join(inputList)
 
-@jit
 def flip(inputStr, k):
     l = len(inputStr)
     count = 0

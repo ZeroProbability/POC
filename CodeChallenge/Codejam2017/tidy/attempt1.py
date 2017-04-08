@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from numba import jit
-
 def main():
     t = int(raw_input())
     for i in xrange(1, t + 1):
         s = int(raw_input())
         print "Case #{}: {}".format(i, prevtidy(s))
 
-@jit
 def find_untidy_digit(n):
     if n < 10: return -1
     ns = str(n)
@@ -22,7 +19,6 @@ def find_untidy_digit(n):
 
     return -1
 
-@jit
 def prevtidy(n):
     ni = n
     while True:
