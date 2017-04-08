@@ -23,17 +23,17 @@ def split_list(l):
     m = heapq.heappop(l)
     if (m.val - 1) % 2 == 0:
         heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
-        heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
+        if m.val > 2: heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
     else:
         heapq.heappush(l, MaxHeapObj((m.val - 1) / 2))
-        heapq.heappush(l, MaxHeapObj((m.val - 1) / 2 + 1))
+        if m.val > 1: heapq.heappush(l, MaxHeapObj((m.val - 1) / 2 + 1))
 
 if __name__ == '__main__':
     main()
 
 #------------------------------------------------------------------------
 
-def test_find_untidy_digit():
+def test_split():
     l = [MaxHeapObj(5)]
     heapq.heapify(l)
     split_list(l)
@@ -49,4 +49,8 @@ def test_find_untidy_digit():
     assert sorted([i.val for i in l]) == [0, 1, 1, 1]
     split_list(l)
     assert sorted([i.val for i in l]) == [0, 0, 1, 1]
+    split_list(l)
+    assert sorted([i.val for i in l]) == [0, 0, 0, 1]
+    split_list(l)
+    assert sorted([i.val for i in l]) == [0, 0, 0, 0]
 
