@@ -10,26 +10,26 @@ def main():
         print "Case #{}: {}".format(i, prevtidy(s))
 
 @jit
-def istidy(n):
-    if n < 10: return True
+def find_untidy_digit(n):
+    if n < 10: return -1
     ns = str(n)
-    i1 = int(ns[0])
-    i2 = int(ns[1])
-    if n < 100:
-        return i1 <= i2
-    if i1 <= i2:
-        return istidy(int(ns[1:]))
+    l = len(ns)
+    for i in xrange(l - 1):
+        i1 = int(ns[i])
+        i2 = int(ns[i+1])
+        if i1 > i2:
+            return i
 
-    return False
+    return -1
 
 @jit
 def prevtidy(n):
     ni = n
     while True:
-        print "checking {}".format(ni)
-        if istidy(ni):
+        dl = find_untidy_digit(ni)
+        if dl < 0:
             return ni
-        ni -= 1
+        ni = decrementdigit(n, dl)
 
 def decrementdigit(n, i):
     ns = str(n)
@@ -38,21 +38,21 @@ def decrementdigit(n, i):
     return int(nn)
 
 if __name__ == '__main__':
-    #main()
-    print prevtidy(111111111111111110)
+    main()
 
 #------------------------------------------------------------------------
 
-def test_istidy():
-    assert istidy(7) 
-    assert istidy(17) 
-    assert not istidy(71) 
-    assert istidy(123) 
-    assert istidy(555) 
-    assert istidy(224488) 
-    assert not istidy(321) 
-    assert not istidy(884422) 
-    assert istidy(112233445566778899) 
+def test_find_untidy_digit():
+    assert find_untidy_digit(7) < 0
+    assert find_untidy_digit(17) < 0
+    assert find_untidy_digit(71) == 0
+    assert find_untidy_digit(123) < 0
+    assert find_untidy_digit(555) < 0
+    assert find_untidy_digit(224488) < 0
+    assert find_untidy_digit(321) == 0
+    assert find_untidy_digit(884422) == 1
+    assert find_untidy_digit(112233445566778899) < 0
+    assert find_untidy_digit(12340000) == 3
 
 def test_decrementdigit():
     assert decrementdigit(110, 1) == 109
@@ -64,4 +64,4 @@ def test_prevtidy():
     assert prevtidy(32) == 29
     assert prevtidy(132) == 129
     assert prevtidy(1000) == 999
-    #assert prevtidy(111111111111111110) == 99999999999999999
+    assert prevtidy(111111111111111110) == 99999999999999999
