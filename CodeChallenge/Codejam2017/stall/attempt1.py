@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from numba import jit
 import heapq
 
 class MaxHeapObj(object):
@@ -13,13 +12,16 @@ class MaxHeapObj(object):
       return self.val == other
   def __str__(self): return str(self.val)
 
+def split_n_times(l, n):
+    for j in xrange(n):
+        split_list(l)
+
 def main():
     t = int(raw_input())
     for i in xrange(1, t + 1):
         n, k = (int(x) for x in raw_input().split(" "))
         l = [MaxHeapObj(n)]
-        for j in xrange(k-1):
-            split_list(l)
+        split_n_times(l, k-1)
 
         if len(l) == 0:
             print "Case #{}: 0 0".format(i)
