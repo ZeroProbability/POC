@@ -16,8 +16,20 @@ class MaxHeapObj(object):
 def main():
     t = int(raw_input())
     for i in xrange(1, t + 1):
-        s = int(raw_input())
-        print "Case #{}: {}".format(i, prevtidy(s))
+        n, k = (int(x) for x in raw_input().split(" "))
+        l = [MaxHeapObj(n)]
+        for j in xrange(k-1):
+            split_list(l)
+
+        if len(l) == 0:
+            print "Case #{}: 0 0".format(i)
+        else:
+            m = heapq.heappop(l).val
+            if m % 2 == 0:
+                #even 
+                print "Case #{}: {} {}".format(i, (m-1)/2 + 1, (m-1)/2)
+            else:
+                print "Case #{}: {} {}".format(i, (m-1)/2, (m-1)/2)
 
 def split_list(l):
     m = heapq.heappop(l)
@@ -74,9 +86,9 @@ def test_split():
     split_list(l)
     assert sorted([i.val for i in l]) == [499, 500]
 
-    l = [MaxHeapObj(1000000)]
+    l = [MaxHeapObj(1000)]
     heapq.heapify(l)
-    for i in xrange(1000000):
+    for i in xrange(1000):
         split_list(l)
     assert sorted([i.val for i in l]) == []
 
