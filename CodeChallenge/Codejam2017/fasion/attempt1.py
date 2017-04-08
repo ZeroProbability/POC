@@ -88,11 +88,21 @@ def arrange(grid):
             if grid[row][col] in [X, P]:
                 new_grid = copy.deepcopy(grid)
                 new_grid[row][col] = O
-                print new_grid
                 if isvalid(new_grid):
-                    print '-' * 10
                     print_grid(new_grid)
-                    print '-' * 10
+                    arrange(new_grid)
+
+def score(grid):
+    n = len(grid)
+    s = 0
+    for row in xrange(n):
+        for col in xrange(n):
+            if grid[row][col] in [X, P]:
+                s += 1
+            if grid[row][col] == O:
+                s += 2
+
+    return s
 
 #O, X, P, E = 'o', 'x', '+', '.'
 def parse_input_grid(n, data_row):
@@ -157,7 +167,7 @@ def test_valid_p1():
     assert not isvalid(grid)
 
 def test_s():
-    grid = parse_input_grid(3, ['+ 1 1', 'x 2 1', '+ 3 3'])
+    grid = parse_input_grid(3, ['+ 1 1', 'x 2 1', '+ 3 2'])
     arrange(grid)
     assert 1 == 2
 
