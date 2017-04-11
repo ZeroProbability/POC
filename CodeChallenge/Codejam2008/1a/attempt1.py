@@ -16,10 +16,11 @@ def solve(i, search_engines, queries):
     return "Case #{}: {}".format(i, switch_count)
 
 def run_tests(lines):
-    line_no = 0
-    def next_line(line_no = line_no):
-        line_no += 1
-        return lines[line_no]
+    def next_line():
+        next_line.line_no += 1
+        return lines[next_line.line_no]
+
+    next_line.line_no = 0
 
     t = int(lines[0])
     for i in xrange(1, t + 1):
@@ -33,7 +34,6 @@ def run_tests(lines):
         for j in xrange(query_count):
             queries.append(next_line())
 
-        print search_engines
         solution = solve(i, search_engines, queries)
         yield solution
 
@@ -85,6 +85,5 @@ Yeehaw
 Googol
     """.splitlines()
     expected_output = """Case #1: 1
-Case #2: 0
-"""
+Case #2: 0"""
     assert "\n".join(list(run_tests(input_data))) == expected_output
