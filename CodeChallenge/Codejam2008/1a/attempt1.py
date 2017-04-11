@@ -12,6 +12,7 @@ def solve(i, search_engines, queries):
             if len(engs) == 0:
                 switch_count += 1
                 engs = set(search_engines)
+                engs.remove(q)
 
     return "Case #{}: {}".format(i, switch_count)
 
