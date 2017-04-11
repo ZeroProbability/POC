@@ -1,25 +1,35 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-def solve(n, m):
-    return {'sum': n + m ,'product': n * m}
+import sys
 
-def print_result(testcase_index, **kwargs):
-    print "Case #{}: {sum} {product}".format(testcase_index, **kwargs)
+def solve(i, n, m):
+    return "Case #{}: {} {}".format(i, n + m , n * m)
 
-def run_tests(input_lines):
-    ''' yields one test case at a time ''' 
-    t = int(input_lines[0])
+def run_tests(lines):
+    t = int(lines[0])
     for i in xrange(1, t + 1):
-        input_line = raw_input()
+        input_line = lines[i]
         n, m = [int(s) for s in input_line.split(" ")] 
-        solution = solve(n = n, m = m)
-        print_result(i, **solution)
+        solution = solve(i, n, m)
+        yield solution
 
 if __name__ == '__main__':
-    run_tests()
+    with open(sys.argv[1], 'r') if len(sys.argv) > 1 else sys.stdin as f:
+        lines = f.read().splitlines()
+        for l in run_tests(lines):
+            print l
 
 # ------------------------------------------------------------------------------
 
 def test_solve():
-    assert solve(3, 4) == { 'sum': 7, 'product': 12 }
+    assert solve(1, 3, 4) == "Case #1: 7 12"
+
+def test_sample():
+    input_data = """2
+3 4
+4 5
+""".splitlines()
+    expected_output = """Case #1: 7 12
+Case #2: 9 20"""
+    assert "\n".join(list(run_tests(input_data))) == expected_output
