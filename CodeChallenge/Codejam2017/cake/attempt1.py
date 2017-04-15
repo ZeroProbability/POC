@@ -17,16 +17,14 @@ def solve(grid):
                 continue
             ris, rie = ri, ri
             cis, cie = ci, ci
-            while(ris >= 0):
-                ris = max(ris-1, 0)
-                if grid[ris] == '?':
-                    break
+            for ris in xrange(ri-1, -1, -1):
+                if grid[ris][ci] == '?': continue
+                break
+            for rie in xrange(ri+1, r):
+                if grid[rie][ci] == '?': continue
+                break
 
-            while(rie < r and grid[rie] == '?'):
-                print "here 2"
-                rie = min(r-1, rie + 1)
             print ris, rie
-
 
 def main():
     t = int(raw_input())
