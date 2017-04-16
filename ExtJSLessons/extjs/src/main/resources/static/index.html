@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all.js"></script>
+    <script type="text/javascript">
+
+        var sessionsPanel = Ext.create('Ext.Panel', {
+            html: 'Sessions Panel',
+            region: 'west',
+            flex: 2
+        });
+
+        var detailsPanel = Ext.create('Ext.Panel', {
+            html: 'Details Panel',
+            region: 'center',
+            flex: 3
+        });
+
+        var speakersPanel = Ext.create('Ext.Panel', {
+            html: 'Speakers Panel',
+            region: 'south',
+            flex: 1
+        });
+
+        Ext.application({
+            name: 'MyApp',
+            launch: function() {
+                Ext.create("Ext.container.Viewport", {
+                    layout: 'border',
+                    items: [ sessionsPanel, detailsPanel, speakersPanel]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>
