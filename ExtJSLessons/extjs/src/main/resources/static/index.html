@@ -11,11 +11,6 @@
             flex: 2
         });
 
-        var detailsPanel = Ext.create('Ext.Panel', {
-            html: 'Details Panel',
-            flex: 3
-        });
-
         var speakersPanel = Ext.create('Ext.Panel', {
             html: 'Speakers Panel',
             flex: 1
@@ -25,7 +20,7 @@
             layout: {
                 type: 'vbox'
             },
-            items: [sessionsPanel, speakersPanel]
+            items: [ { xtype: 'panel', }, speakersPanel]
         });
 
         Ext.application({
@@ -36,7 +31,32 @@
                         type: 'hbox',
                         align: 'stretch'
                     },
-                    items: [ combinedSessionSpeaker, detailsPanel]
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'vbox',
+                                align: 'stretch'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    html:'<b>Sessions Panel</b>',
+                                    flex: 2
+                                },
+                                {
+                                    xtype: 'panel',
+                                    html:'<b>Speakers panel</b>',
+                                    flex: 1
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            html:'<b>Details panel</b>',
+                            flex: 3
+                        }
+                    ]
                 });
             }
         });
