@@ -104,4 +104,26 @@ From Wikipedia, layout managers are software components uesd in widget toolkits 
 
 ### Types of layout managers.
 
+Refer to [ExtJS documentation](http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/layout-browser/layout-browser.html).
 
+* Absolute
+* Accordion
+* Anchor
+* Border
+* Card (Tab Panel)
+* Card (Wizard)
+* Column
+* Fit
+* Table
+* vBox
+* hBox
+
+## Models
+
+### Overview
+
+* Model classes extend `Ext.Data.Model`
+* It has a list of `fields` each of which has a `name`, `type` and other attributes.
+* Models can have `validations`
+* Models can have associations with other models (similar to referential relations in RDBMS)
+* Models can have a proxy. The proxy is responsible for communicating with the backend.

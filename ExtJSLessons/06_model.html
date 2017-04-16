@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+   <meta charset="UTF-8"> 
+   <head>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" rel="stylesheet" />
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all.js"></script>
+      <script type="text/javascript">
+         Ext.define("SessionModel", {
+             extend: "Ext.data.Model",
+             field: [ 
+                 { name: 'id', type: 'int' },
+                 { name: 'title', type: 'string' },
+                 { name: 'sessionLevel', type: 'int' },
+                 { name: 'approved' , type: 'bool', defaultValue: false } 
+             ],
+
+             validations: [
+                 { type: 'length', field: 'title', min: 3},
+                 { type: 'inclusion', field: 'sessionLevel', list: [1,2,3] }
+             ]
+         });
+
+         var mySession1 = Ext.create("SessionModel", {
+             title: 'C++',
+             sessionLevel: 2
+         });
+
+         var mySession2 = Ext.create("SessionModel", {
+             title: 'C++',
+             sessionLevel: 3
+         });
+      </script>
+   </head>
+   <body>
+   </body>
+</html>
