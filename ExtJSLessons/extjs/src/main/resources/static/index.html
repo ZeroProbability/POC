@@ -11,16 +11,18 @@
             launch: function() {
                 Ext.create("Ext.container.Viewport", {
                     layout: {
-                        type: 'hbox',
-                        align: 'stretch'
+                        type: 'border' // <== better than hbox in general because has more capability
                     },
                     items: [
                         {
-                            xtype: 'panel',
+                            region: 'west',
                             layout: {
                                 type: 'vbox',
                                 align: 'stretch'
                             },
+                            flex: 1, // <== Without this 'flex' attribute collapsing the
+                                     // center panel doesn't expand left panel.
+                            split: true,
                             items: [
                                 {
                                     xtype: 'panel',
@@ -36,13 +38,16 @@
                                     flex: 1
                                 }
                             ]
-                        }, {
-                            xtype: 'splitter'
                         },
                         {
+                            region: 'center', //<== All 'border' layout should have a center
                             xtype: 'panel',
                             html:'<b>Details panel</b>',
-                            flex: 3
+                            flex: 1,
+                            title: 'Details panel',
+                            collapsible: true,
+                            collapsed: true,
+                            collapseDirection: 'right'
                         }
                     ]
                 });
