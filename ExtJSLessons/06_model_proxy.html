@@ -13,26 +13,26 @@
                  { name: 'sessionLevel', type: 'int' },
                  { name: 'approved' , type: 'bool', defaultValue: false } 
              ],
-
-             validations: [
-                 { type: 'length', field: 'title', min: 3},
-                 { type: 'inclusion', field: 'sessionLevel', list: [1,2,3] }
-             ]
+             proxy: {
+                 type: 'rest',
+                 url: '/api/session',
+                 reader: {
+                     type: 'json'
+                 }
+             }
          });
 
          var mySession1 = Ext.create("SessionModel", {
+             // id: null, // <== you should not specifiy primary key for create
              title: 'C language',
              sessionLevel: 1
          });
 
-         //debugger;
-         if(!mySession1.isValid()) { 
-             // TODO: Does not appear to work as desired. Find out why.
-             var errors = mySession1.validate();
-             errors.each(function(rec) {
-                 console.log(rec);   // Open browser debugger to view the messages
-             });
-         }
+        mySession1.save({
+            success: function(savedRecord) {
+                console.log(savedRecord.getData());
+            }
+        }); // <== this will trigger proxy put
 
          var mySession2 = Ext.create("SessionModel", {
              title: 'C++',
