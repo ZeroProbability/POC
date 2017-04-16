@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" rel="stylesheet" />
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all.js"></script>
+      <script type="text/javascript">
+        Ext.application({
+            name: 'MyApp',
+            launch: function() {
+                Ext.create('Ext.container.Viewport', {
+                    items: [
+                        {
+                            padding: 20,
+                            height: 200,
+                            width: 200,
+                            style: {
+                                border: '2px solid red'
+                            },
+                            tpl: 'name: {first} {last}',
+                            data: {
+                                first: 'Anbu', 
+                                last: 'Ramasamy'
+                            },
+                            resizable: true, // <== set resizable to true
+                            listener: {   // <== create an event listener
+                                resize: {    
+                                    fn: function(component, width, height) {
+                                        console.log("w/h: " + width + " " + height)
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+      </script>
+   </head>
+   <body>
+   </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" rel="stylesheet" />
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all.js"></script>
+      <script type="text/javascript">
+        Ext.application({
+            name: 'MyApp',
+            launch: function() {
+                Ext.create('Ext.container.Viewport', {
+                    items: [
+                        {
+                             xtype: 'component', // This is the default. So, optional
+                             html: 'My first Extjs application',
+                             padding: 20
+                        }
+                    ]
+                });
+            }
+        });
+      </script>
+   </head>
+   <body>
+   </body>
+</html>
