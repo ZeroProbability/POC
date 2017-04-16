@@ -8,28 +8,35 @@
 
         var sessionsPanel = Ext.create('Ext.Panel', {
             html: 'Sessions Panel',
-            region: 'west',
             flex: 2
         });
 
         var detailsPanel = Ext.create('Ext.Panel', {
             html: 'Details Panel',
-            region: 'center',
             flex: 3
         });
 
         var speakersPanel = Ext.create('Ext.Panel', {
             html: 'Speakers Panel',
-            region: 'south',
             flex: 1
+        });
+
+        var combinedSessionSpeaker = Ext.create("Ext.Panel", {
+            layout: {
+                type: 'vbox'
+            },
+            items: [sessionsPanel, speakersPanel]
         });
 
         Ext.application({
             name: 'MyApp',
             launch: function() {
                 Ext.create("Ext.container.Viewport", {
-                    layout: 'border',
-                    items: [ sessionsPanel, detailsPanel, speakersPanel]
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
+                    },
+                    items: [ combinedSessionSpeaker, detailsPanel]
                 });
             }
         });
