@@ -102,3 +102,6 @@ The above pattern is often referred to as IIFE (Immediately invoked function exp
 
 From Wikipedia, layout managers are software components uesd in widget toolkits which have the ability to lay out widgets by their relative positions without using distance units.
 
+### Types of layout managers.
+
+
