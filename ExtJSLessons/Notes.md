@@ -118,12 +118,20 @@ Refer to [ExtJS documentation](http://docs.sencha.com/extjs/4.2.1/extjs-build/ex
 * vBox
 * hBox
 
-## Models
+## Models & Stores
 
-### Overview
+### Model
 
 * Model classes extend `Ext.Data.Model`
 * It has a list of `fields` each of which has a `name`, `type` and other attributes.
 * Models can have `validations`
 * Models can have associations with other models (similar to referential relations in RDBMS)
 * Models can have a proxy. The proxy is responsible for communicating with the backend.
+
+### Store
+
+* Store classes extend `Ext.Data.Store`
+* They are analogous to a table in RDBMS, while a model is like a record 
+* Most ExtUI complonents usually deal with store rather than individual models.
+
+

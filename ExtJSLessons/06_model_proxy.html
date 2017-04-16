@@ -34,10 +34,16 @@
             }
         }); // <== this will trigger proxy put
 
-         var mySession2 = Ext.create("SessionModel", {
-             title: 'C++',
-             sessionLevel: 3
-         });
+        var sessionBringBack = Ext.ModelManager.getModel('SessionModel');
+
+        sessionBringBack.load(19, {  // assuming '19' was the id of the newly created record
+            success: function(readRecord) {
+                console.log(readRecord.getData());
+                
+                // readRecord.destroy() // <-- sends delete 
+            }
+        }
+
       </script>
    </head>
    <body>
