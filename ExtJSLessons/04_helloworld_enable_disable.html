@@ -8,8 +8,32 @@
             name: 'MyApp',
             launch: function() {
                 Ext.create('Ext.container.Viewport', {
-                    items: [
-                        {
+                    items: [{
+                             xtype: 'button', 
+                             text: 'disable',
+                             handler: function() {
+                                 this.up().down("#myComponent").disable();
+                             }
+                        }, {
+                             xtype: 'button', 
+                             text: 'enable',
+                             handler: function() {
+                                 this.up().down("#myComponent").enable();
+                             }
+                        }, {
+                             xtype: 'button', 
+                             text: 'hide',
+                             handler: function() {
+                                 this.up().down("#myComponent").hide();
+                             }
+                        }, {
+                             xtype: 'button', 
+                             text: 'show',
+                             handler: function() {
+                                 this.up().down("#myComponent").show();
+                             }
+                        },, {
+                            itemId: "myComponent",
                             padding: 20,
                             height: 200,
                             width: 200,

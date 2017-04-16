@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" rel="stylesheet" />
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all.js"></script>
+      <script type="text/javascript">
+ 
+        var myComp1 = Ext.create("Ext.Component", { html: 'component1' });
+        var myComp2 = Ext.create("Ext.Component", { html: 'component2' });
+        var myComp3 = Ext.create("Ext.Component", { html: 'component3' });
+
+        var mycontainer = Ext.create("Ext.container.Container", {
+            items: [ myComp1, myComp2, myComp3 ],
+            layout: 'vbox' // <== simple vbox layout
+        });
+
+        Ext.application({
+            name: 'MyApp',
+            launch: function() {
+                Ext.create('Ext.container.Viewport', {
+                    items: [
+                        mycontainer
+                    ]
+                });
+            }
+        });
+      </script>
+   </head>
+   <body>
+   </body>
+</html>
