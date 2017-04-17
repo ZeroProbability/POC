@@ -27,6 +27,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")  // <== To handle conversion of LocalDateTime to ISO format
 	compile('org.projectlombok:lombok')
 	runtime('com.h2database:h2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

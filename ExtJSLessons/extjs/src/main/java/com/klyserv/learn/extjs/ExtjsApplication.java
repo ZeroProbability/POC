@@ -1,5 +1,6 @@
 package com.klyserv.learn.extjs;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Collection;
 
 @SpringBootApplication
@@ -30,10 +33,30 @@ public class ExtjsApplication {
     @Bean
     CommandLineRunner runner(SessionsRepository sr) {
         return args -> {
-            sr.save(Session.builder().title("C++").level(3).approved(true).build());
-            sr.save(Session.builder().title("C language").level(2).approved(true).build());
-            sr.save(Session.builder().title("golang").level(1).approved(false).build());
-            sr.save(Session.builder().title("javascript").level(2).approved(true).build());
+            sr.save(Session.builder()
+                    .title("C++")
+                    .level(3)
+                    .approved(true)
+                    .sessionTimeDateTime(LocalDateTime.of(2010, Month.APRIL, 10, 10, 20))
+                    .build());
+            sr.save(Session.builder()
+                    .title("C language")
+                    .level(2)
+                    .approved(true)
+                    .sessionTimeDateTime(LocalDateTime.of(2010, Month.SEPTEMBER, 11, 12, 40))
+                    .build());
+            sr.save(Session.builder()
+                    .title("golang")
+                    .level(1)
+                    .approved(false)
+                    .sessionTimeDateTime(LocalDateTime.of(2010, Month.MAY, 22, 12, 30))
+                    .build());
+            sr.save(Session.builder()
+                    .title("javascript")
+                    .level(2)
+                    .approved(true)
+                    .sessionTimeDateTime(LocalDateTime.of(2010, Month.JUNE, 9, 9, 0))
+                    .build());
             sr.findAll().forEach(System.out::println);
         };
     }
@@ -65,4 +88,5 @@ class Session {
     @Column(name="TITLE") private String title;
     @Column(name="APPROVED") private Boolean approved;
     @Column(name="LEVEL") private Integer level;
+    @Column(name="SESSION_TIME") private LocalDateTime sessionTimeDateTime;
 }
