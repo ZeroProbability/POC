@@ -3,12 +3,39 @@
 <meta charset="UTF-8">
 <head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/4.2.1/ext-all-debug.js"></script>
     <script type="text/javascript">
 
         Ext.application({
             name: 'MyApp',
             launch: function() {
+
+                var sessionGridPanel = Ext.create("Ext.grid.Panel", {
+                    store: {
+                        fields: ['id', 'title', 'approved'],
+                        data: [
+                            { id: 101, title: 'JavaScript for dummies', approved: true},
+                            { id: 102, title: 'C# for Smarties', approved: false},
+                            { id: 103, title: 'ExtJS for everyone', approved: true}
+                        ]
+                    },
+                    columns: [
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'id'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'title'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'approved'
+                        }
+                    ]
+
+                });
+
                 Ext.create("Ext.container.Viewport", {
                     layout: {
                         type: 'border' // <== better than hbox in general because has more capability
@@ -22,20 +49,16 @@
                             },
                             flex: 1, // <== Without this 'flex' attribute collapsing the
                                      // center panel doesn't expand left panel.
-                            split: true,
                             items: [
-                                {
-                                    xtype: 'panel',
-                                    html:'<b>Sessions Panel</b>',
-                                    flex: 2
-                                }, {
+                                sessionGridPanel
+                                , {
                                     xtype: 'splitter',
                                     width: 1 // <== This is a work around for ExtJS 4 bug
                                 },
                                 {
                                     xtype: 'panel',
                                     html:'<b>Speakers panel</b>',
-                                    flex: 1
+                                    flex: 2
                                 }
                             ]
                         },
