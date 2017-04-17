@@ -9,6 +9,12 @@ Ext.application({
         'Sessions',
         'SessionForm'
     ], // <== No need to specify 'SE.view'
+    stores: [
+        'Sessions'
+    ],
+    models: [
+        'Session'
+    ],
     launch: function () {
         Ext.create('SE.view.MainView'); // <== we ask ExtJS to look for a file named 'view/MainView.js'
     }

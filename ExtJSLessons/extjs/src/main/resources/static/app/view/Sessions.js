@@ -12,46 +12,7 @@ Ext.define("SE.view.Sessions", {
 
         }
     },
-    store: {
-        fields: ['id',
-            {
-                name: 'title',
-                sortType: 'asUCText'  // <== case independent sorting
-            },
-            'approved',
-            'level',
-            {
-                dateFormat: 'c',  // <== says it is ISO date format
-                name: 'sessionTimeDateTime',
-                sortType: 'asDate',
-                type: 'date'
-            },
-            {
-                convert: function(v, rec) {
-                    var convertIt = Ext.util.Format.dateRenderer('m/d/Y g:i a'),
-                        pretty = convertIt(rec.get("sessionTimeDateTime"));
-                    return pretty;
-                },
-                name: 'sessionTimePretty',
-                type: 'string'
-            }
-        ],
-        autoLoad: true, // <== load the data the first time
-        autoSync: true, // <== when data in grid is changed, the store will be update
-        proxy: {
-            type: 'rest',
-            url: '/sessions/all.json',
-            reader: {
-                type: 'json',
-                root: 'data'
-            }
-        },
-        sorters: [ // <== Defines default sort columns
-            {property: 'approved'},
-            {property: 'title'}
-        ],
-        groupField: 'level' // <== defines
-    },
+    store: 'Sessions', // <== lookup 'Sessions' from app.js
     columns: [
         {
             xtype: 'gridcolumn',
