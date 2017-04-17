@@ -15,11 +15,16 @@
                     alias: 'widget.sessiongridpanel', // <== assigning an alias allows us to later refer to this using xtype
                     store: {
                         fields: ['id', 'title', 'approved'],
-                        data: [
-                            { id: 101, title: 'JavaScript for dummies', approved: true},
-                            { id: 102, title: 'C# for Smarties', approved: false},
-                            { id: 103, title: 'ExtJS for everyone', approved: true}
-                        ]
+                        autoLoad: true, // <== load the data the first time
+                        autoSync: true, // <== when data in grid is changed, the store will be update
+                        proxy: {
+                            type: 'rest',
+                            url: '/sessions/all.json',
+                            reader: {
+                                type: 'json',
+                                root: 'data'
+                            }
+                        }
                     },
                     columns: [
                         {
