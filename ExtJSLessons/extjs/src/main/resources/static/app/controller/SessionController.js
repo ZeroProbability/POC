@@ -4,8 +4,12 @@ Ext.define('SE.controller.SessionController', {
     init: function() {
         this.control({
             "sessiongridpanel" : {
-                itemdblclick: function() {
-                    console.log('itemdblclick')
+                itemdblclick: function(gridpanel, record, item, index, e) {
+
+                    var formWindow = Ext.create('SE.view.SessionForm');
+                    var form = formWindow.down('form');     // <== using xtype in 'down'
+                    form.loadRecord(record);
+                    formWindow.show();
                 }
             }
         });

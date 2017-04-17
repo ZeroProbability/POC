@@ -2,16 +2,6 @@ Ext.define("SE.view.Sessions", {
     extend: 'Ext.grid.Panel',         // <== this is the way to extend grid panel and create our own
     alias: 'widget.sessiongridpanel', // <== assigning an alias allows us to later refer to this using xtype
 
-    listeners: {
-        itemdblclick: function(gridpanel, record, item, index, e) {   // <== Look at the documentation for
-            // Ext.grid.panel to find out the argument
-            var formWindow = Ext.create('SE.view.SessionForm');
-            var form = formWindow.down('form');     // <== using xtype in 'down'
-            form.loadRecord(record);
-            formWindow.show();
-
-        }
-    },
     store: 'Sessions', // <== lookup 'Sessions' from app.js
     columns: [
         {
