@@ -9,6 +9,9 @@ Ext.application({
         'Sessions',
         'SessionForm'
     ], // <== No need to specify 'SE.view'
+    controllers: [
+        'SE.controller.SessionController'
+    ],
     stores: [
         'Sessions'
     ],
