@@ -28,7 +28,7 @@
                                 anchor: '90%'
                             },
                             items: [
-                                { xtype: 'textfield', name: 'title', fieldLabel: 'Title' },
+                                { xtype: 'textfield', name: 'title', fieldLabel: 'Title', allowBlank: false },
                                 { xtype: 'checkboxfield', name: 'approved', fieldLabel: 'Approved'}
                             ]
                         },
@@ -44,6 +44,7 @@
                                 {
                                     xtype: 'button',
                                     text: 'Save',
+                                    formBind: true, // <== Disables the button if the form is invalid. Hmm! Doesn't appear to work
                                     margin: '5 5 5 5',
                                     handler: function(button) {
                                         var form = button.up('window').down('form');
