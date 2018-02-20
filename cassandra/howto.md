@@ -18,4 +18,18 @@ check token values
 
     docker exec -it n1 nodetool ring
 
+view cassandra config file
 
+    docker exec -it n1 /bin/bash
+
+    cd /data/conf
+
+    less cassandra.yaml
+
+get the ip address of the first node
+
+    docker inspect -f '{{ .NetworkSettings.IPAddress }}' n1
+    
+start a second node 
+
+    docker run --name n2 -d tobert/cassandra -seeds <ip address of seed node>
