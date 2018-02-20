@@ -33,3 +33,15 @@ get the ip address of the first node
 start a second node 
 
     docker run --name n2 -d tobert/cassandra -seeds <ip address of seed node>
+
+start a cassandra image with dc and rac parameters
+
+    docker run --name n1 -d tobert/cassandra -dc DC1 -rack RAC1
+
+view cassandra config file
+
+    docker exec -it n1 /bin/bash
+
+    cd /data/conf
+
+    less cassandra-rackdc.properties
