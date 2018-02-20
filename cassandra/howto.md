@@ -50,3 +50,18 @@ stop and remove the containers
 
     docker stop n1 n2 n3
     docker rm n1 n2 n3
+    
+## Creating a simple structure
+
+launch cqlsh
+
+     docker exec -it n1 cqlsh
+
+create keyspace
+
+     create keyspace pluralsight with replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
+     quit;
+
+describe a ring
+
+     docker exec -it n1 nodetool describering pluralsight
