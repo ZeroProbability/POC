@@ -45,3 +45,8 @@ view cassandra config file
     cd /data/conf
 
     less cassandra-rackdc.properties
+
+stop and remove the containers
+
+    docker stop n1 n2 n3
+    docker rm n1 n2 n3
