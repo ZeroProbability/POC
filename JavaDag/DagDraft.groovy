@@ -1,30 +1,44 @@
 import groovy.beans.*
+import java.beans.*
 import java.util.concurrent.LinkedBlockingQueue
 
-class Pixie {
-    @Bindable Object value
+class Pixie<T> {
+    @Bindable T currentValue
 
-    def eval() {
-    }
+    def eval() { }
 }
 
-class A extends Pixie {}
-class B extends Pixie {}
-class C extends Pixie {
+class A extends Pixie<Integer> {}
+class B extends Pixie<Integer> {
     A a
-    B b
+
+    @Override
+    def eval() {
+        this.currentValue = a.currentValue * a.currentValue
+    }
+}
+class C extends Pixie<Integer> {
+    A a
 
     def eval() {
-        this.value = a.value + b.value
+        this.currentValue = a.currentValue * 2
     }
 }
 
-class D extends Pixie {
+class D extends Pixie<Integer> {
     C c
     B b
 
     def eval() {
-        this.value = c.value + b.value
+        this.currentValue = c.currentValue + b.currentValue + 1
+    }
+}
+
+class E extends Pixie<Integer> {
+    D d
+
+    def eval() {
+        this.currentValue = Math.sqrt(d.currentValue).intValue()
     }
 }
 
@@ -33,7 +47,6 @@ class EventManager {
         Thread.startDaemon {
             while(true) {
                 def evt = events.take()
-                println evt
                 if(notifyList.containsKey(evt.source)) {
                     def interestedPixies = notifyList[evt.source]
                     interestedPixies.each { l ->
@@ -66,19 +79,21 @@ class EventManager {
 
 evtManager = new EventManager()
 
-a = new A(value: 1)
-b = new B(value: 2)
-c = new C(a : a, b: b)
-d = new D(c : c, b: b)
+a = new A(currentValue: 1)
+b = new B(a: a)
+c = new C(a: a)
+d = new D(c: c, b: b)
+e = new E(d: d)
 
 evtManager.addPixie(a)
 evtManager.addPixie(b)
 evtManager.addPixie(c)
 evtManager.addPixie(d)
+evtManager.addPixie(e)
 
-println evtManager.notifyList
-println c.getValue()
-a.value = 10
-println c.getValue()
+1.upto(10) {
+    a.currentValue = it
+    Thread.sleep(10)
+    println "${it} => ${e.currentValue}"
+}
 
-Thread.sleep(1_000)
