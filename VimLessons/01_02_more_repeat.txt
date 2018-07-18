@@ -6,6 +6,16 @@ var foobar=foo + bar
 
 Keys: A;<esc> j . j . 
 
+Append a ';' at the end of each line in the following code - this time using a macro
+------------------------------------------------------------------------------------
+var foo=1
+var bar='a'
+var foobar1=foo + bar
+var foobar2=foo * bar
+var foobar3=foo / bar
+
+Keys: qaA;jq @a 4@@
+
 Put a single space between each of the '+' operators in the following 
 line of code
 ----------------------------------------------------------------------

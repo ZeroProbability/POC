@@ -2,10 +2,10 @@ Create horizontal and vertical text lines
 for following tabular data.
 ------------------------------------------
 
-Chapter                    Page
-Normal mode                15
-Insert mode                31
-Visual mode                44
+Chapter           |        Page
+normal mode       |        15
+insert mode       |        31
+visual mode       |        44
 
 At the end it should look like this.
 
