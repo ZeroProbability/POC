@@ -1,5 +1,3 @@
-*
-!*.c
-!*.h
-!.gitignore
-!makefile
+hellomake
+hellofunc.o
+hellomake.o
