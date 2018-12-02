@@ -30,9 +30,9 @@ get the ip address of the first node
 
     docker inspect -f '{{ .NetworkSettings.IPAddress }}' n1
     
-start a second node 
-
-    docker run --name n2 -d tobert/cassandra -seeds <ip address of seed node>
+start a second node `docker run --name n2 -d tobert/cassandra -seeds <ip address of seed node>`
+    
+    docker run --name n2 -d tobert/cassandra -seeds $(docker inspect -f '{{ .NetworkSettings.IPAddress }}' n1)
 
 start a cassandra image with dc and rac parameters
 
