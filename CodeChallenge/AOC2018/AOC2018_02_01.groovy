@@ -6,7 +6,6 @@ def addToCount(String s) {
     def twoCountExists = false
     def threeCountExists = false
     for(def c: sortedList) {
-       /// println "${c} ${prevChar} ${repeatCount}"
        if(c == prevChar) {
           repeatCount++ 
        } else {
@@ -27,7 +26,7 @@ def addToCount(String s) {
     return [twoCountExists, threeCountExists]
 }
 
-def file = '/home/anbu/poc/CodeChallenge/AOC2018/prob2_input.txt'
+def file = 'prob2_input.txt'
 
 def twoCount = 0
 def threeCount = 0
