@@ -1,13 +1,9 @@
 reformatting text
 ----------------------------
-Enter following command 
-:set textwidth=80
-
-select text to be reformated
-
-followed by normal command
-
-gq
+* Enter following command 
+ :set textwidth=80
+* select text to be reformated
+* followed by normal command: gq
 ----------------------------------------
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in magna aliquam, scelerisque nisl sed, consequat enim. Fusce tincidunt volutpat enim, sed ornare lacus malesuada non. Sed placerat volutpat diam, sit amet congue velit blandit quis. Nam ut porttitor nunc. Pellentesque posuere dui ac nisi eleifend, ut tincidunt mi commodo. Maecenas aliquet ultricies dignissim. Sed ultricies magna non sodales facilisis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi fringilla tempor ante, et ullamcorper velit consequat et. Mauris consectetur vulputate felis ut pharetra. Donec aliquam ligula eu turpis pharetra, sed elementum nisl faucibus. Integer porta, lacus nec dictum rhoncus, arcu lorem facilisis tellus, posuere gravida turpis magna vel neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc mattis libero quis neque lobortis pellentesque.  Nam adipiscing nisl vitae neque aliquet, sit amet gravida nibh egestas.  
