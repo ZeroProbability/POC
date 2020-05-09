@@ -1,0 +1,23 @@
+reformatting text
+----------------------------
+Enter following command 
+:set textwidth=80
+
+select text to be reformated
+
+followed by normal command
+
+gq
+----------------------------------------
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in magna aliquam, scelerisque nisl sed, consequat enim. Fusce tincidunt volutpat enim, sed ornare lacus malesuada non. Sed placerat volutpat diam, sit amet congue velit blandit quis. Nam ut porttitor nunc. Pellentesque posuere dui ac nisi eleifend, ut tincidunt mi commodo. Maecenas aliquet ultricies dignissim. Sed ultricies magna non sodales facilisis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi fringilla tempor ante, et ullamcorper velit consequat et. Mauris consectetur vulputate felis ut pharetra. Donec aliquam ligula eu turpis pharetra, sed elementum nisl faucibus. Integer porta, lacus nec dictum rhoncus, arcu lorem facilisis tellus, posuere gravida turpis magna vel neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc mattis libero quis neque lobortis pellentesque.  Nam adipiscing nisl vitae neque aliquet, sit amet gravida nibh egestas.  
+
+Suspendisse ac magna vitae sem elementum accumsan adipiscing bibendum sapien.  Vestibulum ac dignissim massa, ac auctor enim. Sed euismod interdum vestibulum.  Integer sapien massa, blandit non scelerisque eu, malesuada id neque.  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc rhoncus dolor at arcu tristique, non dictum tellus pellentesque. Integer commodo quam ac velit blandit, quis aliquet magna rutrum.  Curabitur sed lectus vel elit hendrerit auctor. Curabitur id adipiscing eros.  Phasellus lobortis tincidunt mauris ac accumsan. Mauris eget dui erat.
+
+Nam ultrices luctus purus et fermentum. Quisque faucibus turpis diam, vitae consequat mauris ornare vel. Cras commodo accumsan odio, a feugiat nunc blandit vitae. Vivamus nec mauris ut eros ultrices faucibus non ut nisi. Nullam volutpat odio vitae dignissim laoreet. Pellentesque malesuada convallis lobortis. In dapibus imperdiet turpis, et facilisis nisi dictum sit amet. Cras vehicula erat elit, sit amet fermentum tortor sollicitudin quis. Maecenas ut congue dolor. Ut rutrum neque eget elementum aliquet. Morbi porta, sem non ultricies facilisis, nisl nisl luctus sem, quis sagittis eros erat sit amet odio. Sed arcu libero, posuere hendrerit scelerisque vel, condimentum quis dui.  Duis et dui luctus, malesuada nibh sed, volutpat urna.
+
+Pellentesque lobortis, dolor id placerat faucibus, quam elit condimentum eros, at porttitor sem tellus sit amet est. Nulla sagittis pretium dui, id placerat lectus faucibus sit amet. Maecenas lobortis dolor sit amet nibh tristique, quis egestas dolor accumsan. Cras ullamcorper pellentesque lorem in pulvinar. Nam congue, elit a bibendum vehicula, magna odio convallis turpis, quis molestie tortor est sit amet ligula. Nullam euismod justo vitae interdum varius. Aliquam urna mi, pulvinar in libero et, porttitor lacinia ligula. Vestibulum condimentum, odio et tincidunt egestas, risus ipsum gravida nisl, non luctus nibh eros sed ante. Morbi suscipit tortor eu arcu ultricies viverra. Fusce egestas libero ligula. Quisque euismod varius massa non ornare. Donec at
+lobortis eros.
+
+Pellentesque sagittis varius felis quis euismod. Nullam iaculis placerat massa, vel ornare nisl congue sed. Sed tempor ullamcorper felis, ac porttitor nunc aliquet tristique. Curabitur sit amet commodo tortor. Fusce bibendum, dolor eget dictum malesuada, ipsum mi ultrices ante, non venenatis ipsum diam in neque. Curabitur lorem arcu, blandit ac nibh vel, dapibus viverra nisi. Mauris ut blandit sapien. Integer volutpat, magna nec adipiscing condimentum, magna dolor gravida leo, non consectetur erat metus quis sem. In vulputate arcu quis elementum ornare. Ut quam lorem, eleifend quis lorem at, pretium laoreet leo.  Donec vitae mauris congue, facilisis felis sed, blandit erat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc condimentum turpis ut elit consectetur, ut gravida lacus tempus.
+
