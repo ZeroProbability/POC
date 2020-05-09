@@ -5,6 +5,8 @@ Ways to use 'insert normal mode'
 * while typing try adding a word at beginning of line
 * try to add a word at comma in same line
 * while typing add a 30 '*' in the line - Tip ^o 40 i * <Esc>
+* delete till previous comma - Tip ^o d T ,
+* start a new line - Tip ^o o, ^o O
 
 ---------------------------------------------------------------------------
 
