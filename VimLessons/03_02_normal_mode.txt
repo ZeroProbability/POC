@@ -1,5 +1,11 @@
 Use <esc> or <Ctrl-[> or <Ctrl-o> to switch to normal mode
 Ctrl-o is for insert normal mode (one command normal mode)
+
+Ways to use 'insert normal mode'
+* while typing try adding a word at beginning of line
+* try to add a word at comma in same line
+* while typing add a 30 '*' in the line - Tip ^o 40 i * <Esc>
+
 ---------------------------------------------------------------------------
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in magna
