@@ -10,7 +10,7 @@
     <name>Websocket02</name>
     <properties>
         <spring.version>4.1.4.RELEASE</spring.version>
-        <jackson.version>2.5.3</jackson.version>
+        <jackson.version>2.11.0</jackson.version>
     </properties>
     <dependencies>
         <dependency>
