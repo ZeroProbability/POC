@@ -1,6 +1,6 @@
 Append a ';' at the end of each line in the following code
 ----------------------------------------------------------
-var foo=1
+var foo=1;
 var bar='a'
 var foobar=foo + bar
 
@@ -23,4 +23,7 @@ var foo = "method("+argument1+","+argument2+")";
 
 Keys: f+ s␣+␣<esc> ;. ;. ;. 
 
+Seek to the location with character. Using the 'f' go seek and apped 'more' after the word 'lot'
+-----------------------------------------------------------------------------------------------
+this is a text that contains a lot of ts. 
 
