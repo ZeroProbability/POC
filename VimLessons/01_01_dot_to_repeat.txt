@@ -23,8 +23,9 @@ Line four
 Should transform to nothing.
 
 
-Use the '>G' to increase the indent to the end of file. And '.' to repeat it n times. 
---------------------------------------------------------------------------------------
+Use the '>G' to increase the indent to the end of file. And '.' to repeat it n
+times.
+------------------------------------------------------------------------------
 Line one
 Line two
 Line three
