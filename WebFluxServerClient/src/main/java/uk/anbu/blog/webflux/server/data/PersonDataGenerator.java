@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -22,6 +23,10 @@ public class PersonDataGenerator {
 
     public Stream<Person> personStream() {
         return data.stream();
+    }
+
+    public Optional<Person> findPerson(int id) {
+        return data.stream().filter(p -> p.getId() == id).findFirst();
     }
 
     private List<Person> initData() {
