@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Build webflux-server-client') {
       steps {
-         sh 'cd WebFlux
+         sh 'cd WebfluxServerClient && ./mvnw clean install'
       }
     }
   }
