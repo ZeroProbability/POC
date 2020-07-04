@@ -10,9 +10,9 @@ pipeline {
         git(url: 'https://github.com/ZeroProbability/POC.git', branch: 'master')
       }
     }
-    stage('Build') {
+    stage('Build webflux-server-client') {
       steps {
-         echo 'This is a minimal pipeline.'
+         sh 'cd WebFlux
       }
     }
   }
